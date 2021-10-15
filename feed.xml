@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://notesbyair.github.io//feed.xml" rel="self" type="application/atom+xml" /><link href="https://notesbyair.github.io//" rel="alternate" type="text/html" hreflang="en" /><updated>2021-10-15T21:29:52+00:00</updated><id>https://notesbyair.github.io//feed.xml</id><title type="html">Notes by Air</title><subtitle></subtitle><author><name>Ajay Ramesh</name><email>notesbyair@mgmail.com</email></author><entry><title type="html">How to test the JHipster using Docker ?</title><link href="https://notesbyair.github.io//blog/cs/2021-07-29-Jhipster-docker/" rel="alternate" type="text/html" title="How to test the JHipster using Docker ?" /><published>2021-07-29T00:00:00+00:00</published><updated>2021-10-15T21:29:45+00:00</updated><id>https://notesbyair.github.io//blog/cs/Jhipster-docker</id><content type="html" xml:base="https://notesbyair.github.io//blog/cs/2021-07-29-Jhipster-docker/">&lt;p&gt;I created this docker image, using which you can quickly test the Jhipster docker …
+TODO, writing this
+https://www.jhipster.tech/&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;FROM notesbyair/jhipster:1
+RUN mkdir app
+COPY app.jdl /app
+COPY git-init.sh /app
+COPY bootstrap.sh /app
+RUN cd /app
+RUN export NG_CLI_ANALYTICS=ci
+WORKDIR  /app
+RUN [ &quot;jhipster&quot;, &quot;jdl&quot;, &quot;app.jdl&quot;, &quot;--no-insight&quot;]
+# ENTRYPOINT [ &quot;./mvnw&quot; ]
+# CMD ls -lrth
+# CMD [&quot;./mvnw&quot;]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Ajay Ramesh</name><email>notesbyair@mgmail.com</email></author><category term="cs" /><summary type="html">I created this docker image, using which you can quickly test the Jhipster docker … TODO, writing this https://www.jhipster.tech/ FROM notesbyair/jhipster:1 RUN mkdir app COPY app.jdl /app COPY git-init.sh /app COPY bootstrap.sh /app RUN cd /app RUN export NG_CLI_ANALYTICS=ci WORKDIR /app RUN [ &quot;jhipster&quot;, &quot;jdl&quot;, &quot;app.jdl&quot;, &quot;--no-insight&quot;] # ENTRYPOINT [ &quot;./mvnw&quot; ] # CMD ls -lrth # CMD [&quot;./mvnw&quot;]</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://notesbyair.github.io//assets/blog/jhipster.png" /><media:content medium="image" url="https://notesbyair.github.io//assets/blog/jhipster.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">How to manage multiple versions of Cuda and cuDNN ?</title><link href="https://notesbyair.github.io//blog/cs/2020-05-26-installing-multiple-versions-of-cuda-cudnn/" rel="alternate" type="text/html" title="How to manage multiple versions of Cuda and cuDNN ?" /><published>2020-05-26T00:00:00+00:00</published><updated>2021-10-15T20:11:40+00:00</updated><id>https://notesbyair.github.io//blog/cs/installing-multiple-versions-of-cuda-cudnn</id><content type="html" xml:base="https://notesbyair.github.io//blog/cs/2020-05-26-installing-multiple-versions-of-cuda-cudnn/">&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#references&quot; id=&quot;markdown-toc-references&quot;&gt;References&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#get-started&quot; id=&quot;markdown-toc-get-started&quot;&gt;Get Started&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#cuda-installation&quot; id=&quot;markdown-toc-cuda-installation&quot;&gt;CUDA installation&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#the-most-important-steps-to-follow-during-cuda-installation&quot; id=&quot;markdown-toc-the-most-important-steps-to-follow-during-cuda-installation&quot;&gt;The most important steps to follow during CUDA installation.&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#automation-script&quot; id=&quot;markdown-toc-automation-script&quot;&gt;Automation Script&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#cudnn-installation-on-all-cuda-versions&quot; id=&quot;markdown-toc-cudnn-installation-on-all-cuda-versions&quot;&gt;cuDNN installation on all CUDA versions.&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#script-to-move-cudnn-to-right-folders&quot; id=&quot;markdown-toc-script-to-move-cudnn-to-right-folders&quot;&gt;Script to move cuDNN to right folders&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#final-results&quot; id=&quot;markdown-toc-final-results&quot;&gt;Final Results&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+
+&lt;p&gt;First of all, I must thank two blog posts, which made my life easier.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;https://blog.kovalevskyi.com/multiple-version-of-cuda-libraries-on-the-same-machine-b9502d50ae77&lt;/li&gt;
+  &lt;li&gt;https://www.pugetsystems.com/labs/hpc/How-to-install-CUDA-9-2-on-Ubuntu-18-04-1184/&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;get-started&quot;&gt;Get Started&lt;/h2&gt;
+
+&lt;p&gt;Why we are doing this ?&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Suppose you want to run some old projects from GitHub.&lt;/li&gt;
+  &lt;li&gt;Experiment with new versions of &lt;a href=&quot;https://developer.nvidia.com/cuda-toolkit&quot;&gt;CUDA&lt;/a&gt;, and experiment new features of it.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;cuda-installation&quot;&gt;CUDA installation&lt;/h2&gt;
+
+&lt;p&gt;Before starting, we need to download CUDA and follow steps from NVIDIA for right version.&lt;/p&gt;
+
+&lt;h4 id=&quot;the-most-important-steps-to-follow-during-cuda-installation&quot;&gt;The most important steps to follow during CUDA installation.&lt;/h4&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;em&gt;Do not install CUDA drivers&lt;/em&gt; from CUDA-toolkit. Manually install the latest drivers for your graphics card.&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;Do not create the symbolic link&lt;/em&gt; during installation process, since we need multiple versions.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;automation-script&quot;&gt;Automation Script&lt;/h3&gt;
+
+&lt;p&gt;The blogs that I mentioned earlier help a lot, and then I added the below script to make my life even more accessible.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;touch ~/.bashrc&lt;/code&gt; add below contents to bottom of the file&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# add below to your env bash file.&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;_switch_cuda &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+   &lt;span class=&quot;nv&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt;
+   &lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$PATH&lt;/span&gt;:/usr/local/cuda-&lt;span class=&quot;nv&quot;&gt;$v&lt;/span&gt;/bin
+   &lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CUDADIR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/cuda-&lt;span class=&quot;nv&quot;&gt;$v&lt;/span&gt;
+   &lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LD_LIBRARY_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$LD_LIBRARY_PATH&lt;/span&gt;:/usr/local/cuda-&lt;span class=&quot;nv&quot;&gt;$v&lt;/span&gt;/lib64
+   nvcc &lt;span class=&quot;nt&quot;&gt;--version&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+_switch_cuda 10.1 &lt;span class=&quot;c&quot;&gt;# change the version of your like to load bash. &lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;cudnn-installation-on-all-cuda-versions&quot;&gt;cuDNN installation on all CUDA versions.&lt;/h2&gt;
+
+&lt;p&gt;Finally, Installing cuDNN is just like copying the source header files into the respective CUDA toolkit path. 
+Download and extract the cuDNN tar file, then run below script to copy lib into right CUDA Dirs.&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;After extraction of cudnn zip, create cudnn_install.sh file and place it like below.
+ajayramesh @ ubox-r9-1804 ~/tmp/cudnn-10.2-linux-x64-v7.6.5.32
+└─ &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;▶ tree &lt;span class=&quot;nt&quot;&gt;-L&lt;/span&gt; 2
+&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+├── cuda
+│   ├── include
+│   ├── lib64
+│   └── NVIDIA_SLA_cuDNN_Support.txt
+└── cudnn_install.sh
+
+3 directories, 2 files
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;script-to-move-cudnn-to-right-folders&quot;&gt;Script to move cuDNN to right folders&lt;/h3&gt;
+&lt;p&gt;Add below content to new &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cudnn_install.sh&lt;/code&gt; and run this command  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;chmod +x cudnn_install.sh &amp;amp; sudo ./cudnn_install.sh&lt;/code&gt; on extracted cuDNN zip folder&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;read&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;CUDA-version: &quot;&lt;/span&gt; ver
+&lt;span class=&quot;nb&quot;&gt;cp &lt;/span&gt;cuda/include/cudnn.h /usr/local/cuda-&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;ver&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;/include
+&lt;span class=&quot;nb&quot;&gt;cp &lt;/span&gt;cuda/lib64/libcudnn&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; /usr/local/cuda-&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;ver&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;/lib64
+&lt;span class=&quot;nb&quot;&gt;chmod &lt;/span&gt;a+r /usr/local/cuda&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;/include/cudnn.h /usr/local/cuda&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;/lib64/libcudnn&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;final-results&quot;&gt;Final Results&lt;/h2&gt;
+&lt;p&gt;My current system now got CUDA 9.0 to 10.2 versions.&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ajayramesh @ ubox-r9-1804 /usr/local
+└─ &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;▶ tree &lt;span class=&quot;nt&quot;&gt;-L&lt;/span&gt; 1
+&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+├── bin
+├── cuda-10.0
+├── cuda-10.1
+├── cuda-10.2
+├── cuda-9.0
+├── cuda-9.1
+├── cuda-9.2
+├── etc
+├── games
+├── include
+├── lib
+├── man -&amp;gt; share/man
+├── sbin
+├── share
+├── src
+└── texlive
+
+16 directories, 0 files
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Ajay Ramesh</name><email>notesbyair@mgmail.com</email></author><category term="cs" /><summary type="html">References Get Started CUDA installation The most important steps to follow during CUDA installation. Automation Script cuDNN installation on all CUDA versions. Script to move cuDNN to right folders Final Results References First of all, I must thank two blog posts, which made my life easier. https://blog.kovalevskyi.com/multiple-version-of-cuda-libraries-on-the-same-machine-b9502d50ae77 https://www.pugetsystems.com/labs/hpc/How-to-install-CUDA-9-2-on-Ubuntu-18-04-1184/ Get Started Why we are doing this ? Suppose you want to run some old projects from GitHub. Experiment with new versions of CUDA, and experiment new features of it. CUDA installation Before starting, we need to download CUDA and follow steps from NVIDIA for right version. The most important steps to follow during CUDA installation. Do not install CUDA drivers from CUDA-toolkit. Manually install the latest drivers for your graphics card. Do not create the symbolic link during installation process, since we need multiple versions. Automation Script The blogs that I mentioned earlier help a lot, and then I added the below script to make my life even more accessible. touch ~/.bashrc add below contents to bottom of the file # add below to your env bash file. function _switch_cuda { v=$1 export PATH=$PATH:/usr/local/cuda-$v/bin export CUDADIR=/usr/local/cuda-$v export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-$v/lib64 nvcc --version } _switch_cuda 10.1 # change the version of your like to load bash. cuDNN installation on all CUDA versions. Finally, Installing cuDNN is just like copying the source header files into the respective CUDA toolkit path. Download and extract the cuDNN tar file, then run below script to copy lib into right CUDA Dirs. After extraction of cudnn zip, create cudnn_install.sh file and place it like below. ajayramesh @ ubox-r9-1804 ~/tmp/cudnn-10.2-linux-x64-v7.6.5.32 └─ $ ▶ tree -L 2 . ├── cuda │   ├── include │   ├── lib64 │   └── NVIDIA_SLA_cuDNN_Support.txt └── cudnn_install.sh 3 directories, 2 files Script to move cuDNN to right folders Add below content to new cudnn_install.sh and run this command chmod +x cudnn_install.sh &amp;amp; sudo ./cudnn_install.sh on extracted cuDNN zip folder read -p &quot;CUDA-version: &quot; ver cp cuda/include/cudnn.h /usr/local/cuda-&quot;${ver}&quot;/include cp cuda/lib64/libcudnn* /usr/local/cuda-&quot;${ver}&quot;/lib64 chmod a+r /usr/local/cuda*/include/cudnn.h /usr/local/cuda*/lib64/libcudnn* Final Results My current system now got CUDA 9.0 to 10.2 versions. ajayramesh @ ubox-r9-1804 /usr/local └─ $ ▶ tree -L 1 . ├── bin ├── cuda-10.0 ├── cuda-10.1 ├── cuda-10.2 ├── cuda-9.0 ├── cuda-9.1 ├── cuda-9.2 ├── etc ├── games ├── include ├── lib ├── man -&amp;gt; share/man ├── sbin ├── share ├── src └── texlive 16 directories, 0 files</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://notesbyair.github.io//assets/blog/nvidia.jpg" /><media:content medium="image" url="https://notesbyair.github.io//assets/blog/nvidia.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Solid Design Principle Revisit</title><link href="https://notesbyair.github.io//blog/cs/2020-05-23-solid-design-principle-revisit/" rel="alternate" type="text/html" title="Solid Design Principle Revisit" /><published>2020-05-23T00:00:00+00:00</published><updated>2021-07-30T04:04:39+00:00</updated><id>https://notesbyair.github.io//blog/cs/solid-design-principle-revisit</id><content type="html" xml:base="https://notesbyair.github.io//blog/cs/2020-05-23-solid-design-principle-revisit/">&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#single-responsibility-principle&quot; id=&quot;markdown-toc-single-responsibility-principle&quot;&gt;Single-Responsibility Principle&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#open-closed-principle&quot; id=&quot;markdown-toc-open-closed-principle&quot;&gt;Open-closed Principle&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#liskov-substitution-principle&quot; id=&quot;markdown-toc-liskov-substitution-principle&quot;&gt;Liskov substitution principle&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#interface-segrgation-principle&quot; id=&quot;markdown-toc-interface-segrgation-principle&quot;&gt;Interface Segrgation Principle&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#dependency-inversion-principle&quot; id=&quot;markdown-toc-dependency-inversion-principle&quot;&gt;Dependency Inversion Principle&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#references&quot; id=&quot;markdown-toc-references&quot;&gt;References&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Five principles of &lt;a href=&quot;https://en.wikipedia.org/wiki/SOLID&quot;&gt;S.O.L.I.D by Robert C. Martin&lt;/a&gt; is core and fundamental to any Agile Development or Adaptive software development. Let’s get started.&lt;/p&gt;
+
+&lt;h2 id=&quot;single-responsibility-principle&quot;&gt;Single-Responsibility Principle&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Keep it simple, only one object is responsible for a feature in your entire application.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;Try this&lt;/strong&gt;: Can you think of objects where it is similar to a Notepad and methods(like saving in pdf/json/etc)?
+There are several ways we can design it, I have added some best practices below, let me know your thoughts.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Best practice&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The below code snippet is having two classes, one to hold Notepad content and another generate Report in PDF.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Doc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+   &lt;span class=&quot;c1&quot;&gt;// ...&lt;/span&gt;
+    &lt;span class=&quot;nc&quot;&gt;Doc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;content&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+   &lt;span class=&quot;c1&quot;&gt;// ...&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// Report in seperate class&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Report&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;PDF&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+    &lt;span class=&quot;nc&quot;&gt;Report&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;doc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;pdf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Not recommended way&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p class=&quot;faded&quot;&gt;Below Doc class is having content and report generation code, so the Doc has two responsibilities, one is handling content and another is generating the report.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Doc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;reportJson&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;reportPdf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;nc&quot;&gt;Doc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;content&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;reportJson&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;reportPdf&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pdf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;pdf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Why the above single class is not recommended?&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Since generating a report in a different format will change from time to time, keeping it in Doc class would not be a good idea(changing existing source code involves in lots of testing — so maintenance cost increases), instead, keep Doc class just for storing the content of the Doc.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Notes&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Repeat:  Keep it simple, if it is complex to your intuition, then definitely it will be more complex to other developers.&lt;/li&gt;
+  &lt;li&gt;Caution: The above example is just to illustrate the Principle of Single Responsibility. Not to show how to design actual notepad.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;open-closed-principle&quot;&gt;Open-closed Principle&lt;/h2&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;“Software entities (classes, modules, functions, etc.** should be open for extension, but closed for modification.”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;Try this:&lt;/strong&gt; Imagine you are building an MS Office word 2020. The above code is very old version, has just two types of export options(pdf, json), but new MSWord2020 has some new features: — such as text to speech. Also, you will be adding new features after few years. How will do you design ?&lt;/p&gt;
+
+&lt;p&gt;There are several ways we can design it, I have added some &lt;strong&gt;Do’s/Don’t&lt;/strong&gt; below, check across your solution.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Best practice&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;doc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;doc_feature1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;feature1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MSWord2020&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;doc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;doc_feature1&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;feature1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Add new feature in 2030&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;doc_feature2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;feature2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MSWord2030&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MSWord2020&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;doc_feature2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;feature2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Not recommended way&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Alternatively, you can modify the original class to add new feature 2, like below — Below code does not obey Rule 1, i.e, single responsibility principle&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MSWord2030&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;feature1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;feature2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;feature3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Notes&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Its always better to program your code in Interfaces and apply inheritance where possible.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;liskov-substitution-principle&quot;&gt;Liskov substitution principle&lt;/h2&gt;
+
+&lt;p&gt;This is the most important and tricky rule to understand, I read several blogs and guides. Try to read this one at least twice.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Quick Test:&lt;/strong&gt; Are you overriding a method or implementing an interface? If Yes, you must test this rule thoroughly.&lt;/p&gt;
+
+&lt;p class=&quot;figure&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;S&lt;/code&gt; is Child or Extends &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;B&lt;/code&gt;, Can you make B = S in your code?
+&lt;img src=&quot;/assets/blog/1.png&quot; alt=&quot;Full-width image&quot; /&gt;&lt;/p&gt;
+
+&lt;p class=&quot;figure&quot;&gt;Can you succeed by Human = HumanoidRobot? Of course not!
+&lt;img src=&quot;/assets/blog/2.png&quot; alt=&quot;Full-width image&quot; /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Human&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;eat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;HumanoidRobot&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Human&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+     &lt;span class=&quot;c1&quot;&gt;// can robot eat ?&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;nc&quot;&gt;Human&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;obj1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Human&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;Human&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;obj2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;HumanoidRobot&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p class=&quot;message&quot;&gt;Repeat: If a class, S, is a subtype of a class, B, then S can be used to replace all instances of B without changing the behaviors of a program. The logic behind this is straightforward. If S is a subtype of B, then it can be expected that S will have the same behaviors as B. Therefore, S can be used in place of B and it would not affect the software. This means that inheritance can be tested by applying substitution.&lt;/p&gt;
+
+&lt;p class=&quot;figure&quot;&gt;&lt;img src=&quot;/assets/blog/3.png&quot; alt=&quot;Full-width image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Notes&lt;/strong&gt;
+Below notes are from the design pattern course in Coursera, feel free to check out.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;The base class is the more generalized class, and therefore, its attributes and behaviors should reflect it. The names given to the attributes and methods, as well as the implementation of each method must be broad enough that all subclasses can use them.&lt;/li&gt;
+  &lt;li&gt;If inheritance is not used correctly, it can lead to a violation of the “Liskov Substitution Principle”. This principle uses substitution to determine whether or not inheritance has been properly used.&lt;/li&gt;
+  &lt;li&gt;These rules are not programmatically enforced by any object-oriented language. In fact, overriding a base class’s behaviors can have advantages. Subclasses can improve the performance of behaviors of its base class, without changing the expected results of said behavior.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;subclass uses different sorting algo, but same behavior.&lt;/p&gt;
+
+&lt;p class=&quot;figure**&quot;&gt;Another example: let’s take a look at a class that is an abstraction of a department store. The base class may implement a naive searching algorithm that, in the worst case, iterates through the entire list of the items that the store sells. A subclass could override this method and provide a better search algorithm. Although the approach that the subclass takes to searching is different, the expected behavior and outcome are the same.
+&lt;img src=&quot;/assets/blog/4.png&quot; alt=&quot;Full-width image&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;interface-segrgation-principle&quot;&gt;Interface Segrgation Principle&lt;/h2&gt;
+&lt;p&gt;Suppose you have an interface for a Robot, operations include run, fight, walk, swim, shoot. Now another company wants to use your code base for Robot and extend to make a Robot which can Speak. But here is the problem, the company doesn’t want to implement swim, fight and shoot operations. So company writes something like below -&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Not recommended way&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The below code violates Principle 3. Never ever changes the behavior and force the client to implement the behavior. Shoot, Swim, and Fight are irrelevant to New Client.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Human&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;eat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;HumanoidRobot&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Human&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// Humanoid Robot  - A humanoid is something that has an appearance&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// resembling a human without actually being one.&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// can robot eat ? No&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@override&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;publi&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;eat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// do nothing&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;What is the problem?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;You are making client or company implement the operations forcefully. So in order avoid this we need to have interface segregation principle. It’s quite simple, that no class should be forced to depend on methods it does not use.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Best practice&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Solution to the Don’t part, now read below snippet and compare with above.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Everything&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// similar to Object class(root class, it has most generalized methods) in Java&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;HumanoidRobot&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Everything&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// code to run using batteries.&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Human&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Everything&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// code to run using physical streangth.&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// Example:&lt;/span&gt;
+    &lt;span class=&quot;nc&quot;&gt;Everything&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ev&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;HumanoidRobot&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;nc&quot;&gt;Everything&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ev&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Human&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// if you apply the substition rule it satisfies, since both does the run operation but differently.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;dependency-inversion-principle&quot;&gt;Dependency Inversion Principle&lt;/h2&gt;
+
+&lt;p&gt;From wikipedia:&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;High-level modules should not depend on low-level modules. Both should depend on abstractions.
+Abstractions should not depend on details. Details should depend on abstractions&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Quite easy to understand using examples
+First, Take a look at Java Object Class: Root class to all objects. For example, Take Number, String, Double etc Objects in java extends Object class.
+All above principles apply to this one. Here suppose you have Robot interface, then all objects of Robot should be referring to an abstraction rather than the concrete implementation. Referring to the above code(Principle-4: Interface Segregation):&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Best practice&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nc&quot;&gt;Robot&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SpeakingRobot&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Implementation of SpeakingRobot Class&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Robot&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+     &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+     &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;shoot&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+     &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;swim&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+     &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fight&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+     &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;walk&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+ &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// company A wants to extend the Robot to add Speaking feature&lt;/span&gt;
+
+
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SpeakingRobot&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Robot&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+     &lt;span class=&quot;nd&quot;&gt;@Overrides&lt;/span&gt;
+     &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+         &lt;span class=&quot;c1&quot;&gt;// .. inherits from Robot&lt;/span&gt;
+     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+     &lt;span class=&quot;nd&quot;&gt;@Overrides&lt;/span&gt;
+     &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;shoot&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+         &lt;span class=&quot;c1&quot;&gt;// do nothing&lt;/span&gt;
+         &lt;span class=&quot;c1&quot;&gt;// return;&lt;/span&gt;
+     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+     &lt;span class=&quot;nd&quot;&gt;@Overrides&lt;/span&gt;
+     &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;swim&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;c1&quot;&gt;// do nothing&lt;/span&gt;
+         &lt;span class=&quot;c1&quot;&gt;// return;&lt;/span&gt;
+     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+     &lt;span class=&quot;nd&quot;&gt;@Overrides&lt;/span&gt;
+     &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fight&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+          &lt;span class=&quot;c1&quot;&gt;// do nothing&lt;/span&gt;
+         &lt;span class=&quot;c1&quot;&gt;// return;&lt;/span&gt;
+     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+     &lt;span class=&quot;nd&quot;&gt;@Overrides&lt;/span&gt;
+     &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;walk&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+         &lt;span class=&quot;c1&quot;&gt;// .. inherits from Robot&lt;/span&gt;
+     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+     &lt;span class=&quot;nd&quot;&gt;@Overrides&lt;/span&gt;
+     &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;speak&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// code to speak&lt;/span&gt;
+     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+ &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Not recommended way&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nc&quot;&gt;SpeakingRobot&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SpeakingRobot&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// DONT Declare like this :)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;SpeakingRobot class is an actual implementation(low-level class), so any object which might change in future should depend on abstractions(Robot interface is high-level abstraction here).&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Robot&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// very common features, every client must implement are below.&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;walk&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ShootingRobot&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Robot&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;shoot&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SwimmingRobot&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Robot&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;swim&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;FightingRobot&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Robot&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fight&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt;  &lt;span class=&quot;nc&quot;&gt;SpeakingRobot&lt;/span&gt;  &lt;span class=&quot;kd&quot;&gt;implements&lt;/span&gt;  &lt;span class=&quot;nc&quot;&gt;Robot&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+
+    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;speak&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// code to speak&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+
+    &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// code to run&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;walk&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// code to walk&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.coursera.org/learn/design-patterns&quot; title=&quot;Coursera Design Pattern&quot;&gt;Coursera - Design Patterns &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://dzone.com/articles/the-liskov-substitution-principle-with-examples&quot;&gt;Liskov Substitution Principle from Dzone&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://hackernoon.com/liskov-substitution-principle-a982551d584a&quot;&gt;Liskov Substitution Principle from Hackernoon&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://stackoverflow.com/questions/56860/what-is-an-example-of-the-liskov-substitution-principle&quot;&gt;Liskov Substitution Principle from Stackoverflow&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://web.archive.org/web/20151128004108/http://www.objectmentor.com/resources/articles/lsp.pdf&quot;&gt;Liskov Substitution Principle from Actual Paper&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Ajay Ramesh</name><email>notesbyair@mgmail.com</email></author><category term="cs" /><summary type="html">Single-Responsibility Principle Open-closed Principle Liskov substitution principle Interface Segrgation Principle Dependency Inversion Principle References Five principles of S.O.L.I.D by Robert C. Martin is core and fundamental to any Agile Development or Adaptive software development. Let’s get started. Single-Responsibility Principle Keep it simple, only one object is responsible for a feature in your entire application. Try this: Can you think of objects where it is similar to a Notepad and methods(like saving in pdf/json/etc)? There are several ways we can design it, I have added some best practices below, let me know your thoughts. Best practice The below code snippet is having two classes, one to hold Notepad content and another generate Report in PDF. public class Doc { private String content; // ... Doc(String content) { this.content = content; } // ... } // Report in seperate class public class Report { public PDF output; ... Report(String doc) { ... } private String pdf() { ... } ... } Not recommended way Below Doc class is having content and report generation code, so the Doc has two responsibilities, one is handling content and another is generating the report. public class Doc { String content; String reportJson; String reportPdf; Doc(String content) { this.content = content; this.reportJson = json(); this.reportPdf = pdf(); } private String json() { ... } private String pdf() { ... } } Why the above single class is not recommended? Since generating a report in a different format will change from time to time, keeping it in Doc class would not be a good idea(changing existing source code involves in lots of testing — so maintenance cost increases), instead, keep Doc class just for storing the content of the Doc. Notes Repeat: Keep it simple, if it is complex to your intuition, then definitely it will be more complex to other developers. Caution: The above example is just to illustrate the Principle of Single Responsibility. Not to show how to design actual notepad. Open-closed Principle “Software entities (classes, modules, functions, etc.** should be open for extension, but closed for modification.” Try this: Imagine you are building an MS Office word 2020. The above code is very old version, has just two types of export options(pdf, json), but new MSWord2020 has some new features: — such as text to speech. Also, you will be adding new features after few years. How will do you design ? There are several ways we can design it, I have added some Do’s/Don’t below, check across your solution. Best practice interface doc { void display(String content); } interface doc_feature1 { void feature1(String content); } class MSWord2020 implements doc, doc_feature1 { public void display(String content) { ... } public void feature1(String content) { ... } } Add new feature in 2030 interface doc_feature2 { void feature2(String content); } class MSWord2030 extends MSWord2020 implements doc_feature2 { public void feature2(String content) { ... } } Not recommended way Alternatively, you can modify the original class to add new feature 2, like below — Below code does not obey Rule 1, i.e, single responsibility principle class MSWord2030 { void display() { ... } void feature1() { ... } void feature2() { ... } void feature3() { ... } } Notes Its always better to program your code in Interfaces and apply inheritance where possible. Liskov substitution principle This is the most important and tricky rule to understand, I read several blogs and guides. Try to read this one at least twice. Quick Test: Are you overriding a method or implementing an interface? If Yes, you must test this rule thoroughly. S is Child or Extends B, Can you make B = S in your code? Can you succeed by Human = HumanoidRobot? Of course not! public interface Human { public void eat(); } public class HumanoidRobot extends Human { // can robot eat ? } Human obj1 = new Human() Human obj2 = new HumanoidRobot() Repeat: If a class, S, is a subtype of a class, B, then S can be used to replace all instances of B without changing the behaviors of a program. The logic behind this is straightforward. If S is a subtype of B, then it can be expected that S will have the same behaviors as B. Therefore, S can be used in place of B and it would not affect the software. This means that inheritance can be tested by applying substitution. Notes Below notes are from the design pattern course in Coursera, feel free to check out. The base class is the more generalized class, and therefore, its attributes and behaviors should reflect it. The names given to the attributes and methods, as well as the implementation of each method must be broad enough that all subclasses can use them. If inheritance is not used correctly, it can lead to a violation of the “Liskov Substitution Principle”. This principle uses substitution to determine whether or not inheritance has been properly used. These rules are not programmatically enforced by any object-oriented language. In fact, overriding a base class’s behaviors can have advantages. Subclasses can improve the performance of behaviors of its base class, without changing the expected results of said behavior. subclass uses different sorting algo, but same behavior. Another example: let’s take a look at a class that is an abstraction of a department store. The base class may implement a naive searching algorithm that, in the worst case, iterates through the entire list of the items that the store sells. A subclass could override this method and provide a better search algorithm. Although the approach that the subclass takes to searching is different, the expected behavior and outcome are the same. Interface Segrgation Principle Suppose you have an interface for a Robot, operations include run, fight, walk, swim, shoot. Now another company wants to use your code base for Robot and extend to make a Robot which can Speak. But here is the problem, the company doesn’t want to implement swim, fight and shoot operations. So company writes something like below - Not recommended way The below code violates Principle 3. Never ever changes the behavior and force the client to implement the behavior. Shoot, Swim, and Fight are irrelevant to New Client. public interface Human { public void eat(); } public class HumanoidRobot extends Human { // Humanoid Robot - A humanoid is something that has an appearance // resembling a human without actually being one. // can robot eat ? No @override publi void eat() { // do nothing } } What is the problem? You are making client or company implement the operations forcefully. So in order avoid this we need to have interface segregation principle. It’s quite simple, that no class should be forced to depend on methods it does not use. Best practice Solution to the Don’t part, now read below snippet and compare with above. public interface Everything { run() } // similar to Object class(root class, it has most generalized methods) in Java public class HumanoidRobot extends Everything { public void run() { // code to run using batteries. } } public class Human extends Everything { public void run() { // code to run using physical streangth. } } // Example: Everything ev = new HumanoidRobot() Everything ev = new Human() // if you apply the substition rule it satisfies, since both does the run operation but differently. Dependency Inversion Principle From wikipedia: High-level modules should not depend on low-level modules. Both should depend on abstractions. Abstractions should not depend on details. Details should depend on abstractions Quite easy to understand using examples First, Take a look at Java Object Class: Root class to all objects. For example, Take Number, String, Double etc Objects in java extends Object class. All above principles apply to this one. Here suppose you have Robot interface, then all objects of Robot should be referring to an abstraction rather than the concrete implementation. Referring to the above code(Principle-4: Interface Segregation): Best practice Robot r = new SpeakingRobot() Implementation of SpeakingRobot Class public interface Robot { void run(); void shoot(); void swim(); void fight(); void walk(); } // company A wants to extend the Robot to add Speaking feature public SpeakingRobot extends Robot { @Overrides void run() { // .. inherits from Robot } @Overrides void shoot() { // do nothing // return; } @Overrides void swim() { // do nothing // return; } @Overrides void fight(){ // do nothing // return; } @Overrides void walk() { // .. inherits from Robot } @Overrides void speak() { // code to speak } } Not recommended way SpeakingRobot r = new SpeakingRobot() // DONT Declare like this :) SpeakingRobot class is an actual implementation(low-level class), so any object which might change in future should depend on abstractions(Robot interface is high-level abstraction here). interface Robot { // very common features, every client must implement are below. void run(); void walk(); } interface ShootingRobot extends Robot { void shoot(); } interface SwimmingRobot extends Robot { void swim(); } interface FightingRobot extends Robot { void fight(); } class SpeakingRobot implements Robot{ void speak() { // code to speak } @Override public void run() { // code to run } @Override public void walk() { // code to walk } } References Coursera - Design Patterns Liskov Substitution Principle from Dzone Liskov Substitution Principle from Hackernoon Liskov Substitution Principle from Stackoverflow Liskov Substitution Principle from Actual Paper</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://notesbyair.github.io//assets/blog/solid.jpg" /><media:content medium="image" url="https://notesbyair.github.io//assets/blog/solid.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
