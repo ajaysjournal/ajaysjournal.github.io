@@ -69,7 +69,7 @@
       "title": "How to test the JHipster using Docker ?",
       "date": "2021-07-29 00:00:00 +0000",
       "description": "I am writing this blog to give some insights on managing multiple versions of Cuda and some links.\n",
-      "content": "\n  how to update the Jhipster apps ?\n\n\ntesting this …\nI created this docker image, using which you can quickly test the Jhipster docker …\n\nhttps://www.jhipster.tech/\n\nFROM notesbyair/jhipster:1\nRUN mkdir app\nCOPY app.jdl /app\nCOPY git-init.sh /app\nCOPY bootstrap.sh /app\nRUN cd /app\nRUN export NG_CLI_ANALYTICS=ci\nWORKDIR  /app\nRUN [ \"jhipster\", \"jdl\", \"app.jdl\", \"--no-insight\"]\n# ENTRYPOINT [ \"./mvnw\" ]\n# CMD ls -lrth\n# CMD [\"./mvnw\"]\n\n\nhow to update the Jhipster apps ?\n\nthe thing which makes so confusing is to updating the app ?\n",
+      "content": "\n  how to update the Jhipster apps ?\n  final toc\n  conclusion\n\n\ntesting this …\nI created this docker image, using which you can quickly test the Jhipster docker …\n\nhttps://www.jhipster.tech/\n\nFROM notesbyair/jhipster:1\nRUN mkdir app\nCOPY app.jdl /app\nCOPY git-init.sh /app\nCOPY bootstrap.sh /app\nRUN cd /app\nRUN export NG_CLI_ANALYTICS=ci\nWORKDIR  /app\nRUN [ \"jhipster\", \"jdl\", \"app.jdl\", \"--no-insight\"]\n# ENTRYPOINT [ \"./mvnw\" ]\n# CMD ls -lrth\n# CMD [\"./mvnw\"]\n\n\nhow to update the Jhipster apps ?\n\nthe thing which makes so confusing is to updating the app ?\n\nfinal toc\n\nconclusion\n",
       "categories": ["cs"],
       "tags": [],
       
@@ -78,7 +78,7 @@
     },{
       
       "title": "cs",
-      "date": "2021-10-16 01:42:04 +0000",
+      "date": "2021-10-16 01:47:05 +0000",
       "description": "All Computer Science related blogs\n",
       "content": "Work in progress …\n",
       "categories": [],
