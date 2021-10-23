@@ -29,7 +29,7 @@ const SHELL_CACHE = "shell-9.1.2--v13--sw/";
 const ASSETS_CACHE = "assets--v13--sw/";
 
 // The cache for regular content, which will be invalidated every time you make a new build.
-const CONTENT_CACHE = "content--2021-10-16T01:47:05+00:00--sw/";
+const CONTENT_CACHE = "content--2021-10-23T00:57:42+00:00--sw/";
 
 // A URL search parameter you can add to external assets to cache them in the service worker.
 const SW_CACHE_SEARCH_PARAM = "sw-cache";
@@ -53,10 +53,12 @@ const SHELL_FILES = [
 
 const STATIC_FILES = [
   /**/"/assets/blog/1.png",
+  /**/"/assets/blog/10-2021/jhip-helloworld.gif",
   /**/"/assets/blog/2.png",
   /**/"/assets/blog/3.png",
   /**/"/assets/blog/4.png",
   /**/"/assets/blog/jhipster.png",
+  /**/"/assets/blog/me-small.jpg",
   /**/"/assets/blog/nvidia.jpg",
   /**/"/assets/blog/solid.jpg",
   /**/"/assets/icons/favicon.ico",
@@ -79,6 +81,7 @@ const STATIC_FILES = [
   /**/"/assets/projects/oauth.png",
   /**/"/assets/projects/td.JPG",
   /**/"/assets/projects/vertico.jpg",
+  /**/"/cs/desktop.ini",
   /**/"/package-lock.json",
   /**/"/package.json",
   /**/"/assets/bower.json",

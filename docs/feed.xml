@@ -1,35 +1,100 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://notesbyair.github.io//feed.xml" rel="self" type="application/atom+xml" /><link href="https://notesbyair.github.io//" rel="alternate" type="text/html" hreflang="en" /><updated>2021-10-16T01:47:05+00:00</updated><id>https://notesbyair.github.io//feed.xml</id><title type="html">Notes by Air</title><subtitle></subtitle><author><name>Ajay Ramesh</name><email>notesbyair@mgmail.com</email></author><entry><title type="html">How to test the JHipster using Docker ?</title><link href="https://notesbyair.github.io//blog/cs/2021-07-29-Jhipster-docker/" rel="alternate" type="text/html" title="How to test the JHipster using Docker ?" /><published>2021-07-29T00:00:00+00:00</published><updated>2021-10-16T01:47:03+00:00</updated><id>https://notesbyair.github.io//blog/cs/Jhipster-docker</id><content type="html" xml:base="https://notesbyair.github.io//blog/cs/2021-07-29-Jhipster-docker/">&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#how-to-update-the-jhipster-apps-&quot; id=&quot;markdown-toc-how-to-update-the-jhipster-apps-&quot;&gt;how to update the Jhipster apps ?&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#final-toc&quot; id=&quot;markdown-toc-final-toc&quot;&gt;final toc&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#conclusion&quot; id=&quot;markdown-toc-conclusion&quot;&gt;conclusion&lt;/a&gt;&lt;/li&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://notesbyair.github.io//feed.xml" rel="self" type="application/atom+xml" /><link href="https://notesbyair.github.io//" rel="alternate" type="text/html" hreflang="en" /><updated>2021-10-23T00:57:42+00:00</updated><id>https://notesbyair.github.io//feed.xml</id><title type="html">Notes by Air</title><subtitle></subtitle><author><name>Ajay Ramesh</name><email>notesbyair@mgmail.com</email></author><entry><title type="html">Try JHipster using Docker</title><link href="https://notesbyair.github.io//blog/cs/2021-07-29-Jhipster-docker/" rel="alternate" type="text/html" title="Try JHipster using Docker" /><published>2021-07-29T00:00:00+00:00</published><updated>2021-10-23T00:57:41+00:00</updated><id>https://notesbyair.github.io//blog/cs/Jhipster-docker</id><content type="html" xml:base="https://notesbyair.github.io//blog/cs/2021-07-29-Jhipster-docker/">&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#pre-requirements&quot; id=&quot;markdown-toc-pre-requirements&quot;&gt;Pre-requirements&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#step-01-create-docker-file&quot; id=&quot;markdown-toc-step-01-create-docker-file&quot;&gt;Step 0.1: Create Docker file&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#step-02-create-appjdl-file&quot; id=&quot;markdown-toc-step-02-create-appjdl-file&quot;&gt;Step 0.2: Create app.jdl file&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#step-1-build-the-container&quot; id=&quot;markdown-toc-step-1-build-the-container&quot;&gt;Step 1: Build the Container&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#step-2-run-the-jhipster-app&quot; id=&quot;markdown-toc-step-2-run-the-jhipster-app&quot;&gt;Step 2: Run the Jhipster App&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#source-code&quot; id=&quot;markdown-toc-source-code&quot;&gt;Source Code&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;testing this …
-I created this docker image, using which you can quickly test the Jhipster docker …&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.jhipster.tech/&quot;&gt;JHipster&lt;/a&gt;  is a development platform to quickly generate, develop, &amp;amp; deploy modern web applications &amp;amp; microservice architectures.
+It’s been a year with Jhipster, as a token of appreciation to community, writing this blog for those who wants to try out this platform quickly.&lt;/p&gt;
 
-&lt;p&gt;https://www.jhipster.tech/&lt;/p&gt;
+&lt;h2 id=&quot;pre-requirements&quot;&gt;Pre-requirements&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;Docker - Done&lt;/li&gt;
+&lt;/ol&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;FROM notesbyair/jhipster:1
+&lt;h2 id=&quot;step-01-create-docker-file&quot;&gt;Step 0.1: Create Docker file&lt;/h2&gt;
+
+&lt;p&gt;Create a file, name it as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Dockerfile&lt;/code&gt;, add below content.&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;FROM node:14.16
+RUN apt-get update &amp;amp;&amp;amp; apt-get install -y libasound2 libxtst6
+RUN wget https://download.bell-sw.com/java/11.0.11+9/bellsoft-jdk11.0.11+9-linux-amd64.deb &amp;amp;&amp;amp; \
+    apt install ./bellsoft-jdk11.0.11+9-linux-amd64.deb 
+
+RUN npm install -g generator-jhipster
+
+RUN  [ &quot;java&quot;, &quot;-version&quot; ]
+RUN jhipster --version
+
 RUN mkdir app
 COPY app.jdl /app
-COPY git-init.sh /app
-COPY bootstrap.sh /app
 RUN cd /app
 RUN export NG_CLI_ANALYTICS=ci
 WORKDIR  /app
 RUN [ &quot;jhipster&quot;, &quot;jdl&quot;, &quot;app.jdl&quot;, &quot;--no-insight&quot;]
-# ENTRYPOINT [ &quot;./mvnw&quot; ]
-# CMD ls -lrth
-# CMD [&quot;./mvnw&quot;]
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h2 id=&quot;how-to-update-the-jhipster-apps-&quot;&gt;how to update the Jhipster apps ?&lt;/h2&gt;
+&lt;h2 id=&quot;step-02-create-appjdl-file&quot;&gt;Step 0.2: Create app.jdl file&lt;/h2&gt;
+&lt;p&gt;JDL - JHipster Domain Language to define your app, for more try this &lt;a href=&quot;https://start.jhipster.tech/jdl-studio/&quot;&gt;jdl-studio&lt;/a&gt;
+I wanted to keep it simple and short, so here I am creating entity &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;News&lt;/code&gt; to store news.&lt;/p&gt;
 
-&lt;p&gt;the thing which makes so confusing is to updating the app ?&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;application {
+  config {
+    applicationType monolith
+    authenticationType jwt
+    baseName NewsFeed
+    buildTool maven
+    clientFramework angularX
+    clientTheme yeti
+    clientPackageManager npm
+    databaseType sql
+    devDatabaseType h2Disk
+    dtoSuffix DTO
+    enableHibernateCache true
+    enableSwaggerCodegen true
+    enableTranslation false
+    jhiPrefix hg
+    packageName com.news.app
+    prodDatabaseType postgresql
+    reactive false
+    searchEngine false
+    serverPort 8080
+    serviceDiscoveryType no
+    skipClient false
+    skipServer false
+    testFrameworks []
+    websocket false
+  }
+  entities *
+}
 
-&lt;h2 id=&quot;final-toc&quot;&gt;final toc&lt;/h2&gt;
+entity News {
+  name String
+  icon ImageBlob
+  date LocalDate
+  content TextBlob
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h2 id=&quot;conclusion&quot;&gt;conclusion&lt;/h2&gt;</content><author><name>Ajay Ramesh</name><email>notesbyair@mgmail.com</email></author><category term="cs" /><summary type="html">how to update the Jhipster apps ? final toc conclusion testing this … I created this docker image, using which you can quickly test the Jhipster docker … https://www.jhipster.tech/ FROM notesbyair/jhipster:1 RUN mkdir app COPY app.jdl /app COPY git-init.sh /app COPY bootstrap.sh /app RUN cd /app RUN export NG_CLI_ANALYTICS=ci WORKDIR /app RUN [ &quot;jhipster&quot;, &quot;jdl&quot;, &quot;app.jdl&quot;, &quot;--no-insight&quot;] # ENTRYPOINT [ &quot;./mvnw&quot; ] # CMD ls -lrth # CMD [&quot;./mvnw&quot;] how to update the Jhipster apps ? the thing which makes so confusing is to updating the app ? final toc conclusion</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://notesbyair.github.io//assets/blog/jhipster.png" /><media:content medium="image" url="https://notesbyair.github.io//assets/blog/jhipster.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">How to manage multiple versions of Cuda and cuDNN ?</title><link href="https://notesbyair.github.io//blog/cs/2020-05-26-installing-multiple-versions-of-cuda-cudnn/" rel="alternate" type="text/html" title="How to manage multiple versions of Cuda and cuDNN ?" /><published>2020-05-26T00:00:00+00:00</published><updated>2021-10-16T01:41:48+00:00</updated><id>https://notesbyair.github.io//blog/cs/installing-multiple-versions-of-cuda-cudnn</id><content type="html" xml:base="https://notesbyair.github.io//blog/cs/2020-05-26-installing-multiple-versions-of-cuda-cudnn/">&lt;ul&gt;
+&lt;h2 id=&quot;step-1-build-the-container&quot;&gt;Step 1: Build the Container&lt;/h2&gt;
+&lt;p&gt;First let’s build the container, which installs the JHipster in local, creates the application with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;News&lt;/code&gt; entity.&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker build -t jhipsterlab:latest .   
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h2 id=&quot;step-2-run-the-jhipster-app&quot;&gt;Step 2: Run the Jhipster App&lt;/h2&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker container run --name jhipsterLab -p 9999:8080  -it jhipsterlab:latest  /bin/bash ./mvnw
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Now your application is running in below port.
+&lt;a href=&quot;http://localhost:9999&quot;&gt;http://localhost:9999&lt;/a&gt;&lt;/p&gt;
+
+&lt;p class=&quot;figure&quot;&gt;&lt;img src=&quot;/assets/blog/10-2021/jhip-helloworld.gif&quot; alt=&quot;final&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;source-code&quot;&gt;Source Code&lt;/h2&gt;
+
+&lt;p&gt;Entire project is avialble here, feel free to clone and play around.
+&lt;a href=&quot;https://github.com/notesbyair/jhipster-hello-world-app&quot;&gt;https://github.com/notesbyair/jhipster-hello-world-app&lt;/a&gt;&lt;/p&gt;</content><author><name>Ajay Ramesh</name><email>notesbyair@mgmail.com</email></author><category term="cs" /><summary type="html">Pre-requirements Step 0.1: Create Docker file Step 0.2: Create app.jdl file Step 1: Build the Container Step 2: Run the Jhipster App Source Code JHipster is a development platform to quickly generate, develop, &amp;amp; deploy modern web applications &amp;amp; microservice architectures. It’s been a year with Jhipster, as a token of appreciation to community, writing this blog for those who wants to try out this platform quickly. Pre-requirements Docker - Done Step 0.1: Create Docker file Create a file, name it as Dockerfile, add below content. FROM node:14.16 RUN apt-get update &amp;amp;&amp;amp; apt-get install -y libasound2 libxtst6 RUN wget https://download.bell-sw.com/java/11.0.11+9/bellsoft-jdk11.0.11+9-linux-amd64.deb &amp;amp;&amp;amp; \ apt install ./bellsoft-jdk11.0.11+9-linux-amd64.deb RUN npm install -g generator-jhipster RUN [ &quot;java&quot;, &quot;-version&quot; ] RUN jhipster --version RUN mkdir app COPY app.jdl /app RUN cd /app RUN export NG_CLI_ANALYTICS=ci WORKDIR /app RUN [ &quot;jhipster&quot;, &quot;jdl&quot;, &quot;app.jdl&quot;, &quot;--no-insight&quot;] Step 0.2: Create app.jdl file JDL - JHipster Domain Language to define your app, for more try this jdl-studio I wanted to keep it simple and short, so here I am creating entity News to store news. application { config { applicationType monolith authenticationType jwt baseName NewsFeed buildTool maven clientFramework angularX clientTheme yeti clientPackageManager npm databaseType sql devDatabaseType h2Disk dtoSuffix DTO enableHibernateCache true enableSwaggerCodegen true enableTranslation false jhiPrefix hg packageName com.news.app prodDatabaseType postgresql reactive false searchEngine false serverPort 8080 serviceDiscoveryType no skipClient false skipServer false testFrameworks [] websocket false } entities * } entity News { name String icon ImageBlob date LocalDate content TextBlob } Step 1: Build the Container First let’s build the container, which installs the JHipster in local, creates the application with News entity. docker build -t jhipsterlab:latest . Step 2: Run the Jhipster App docker container run --name jhipsterLab -p 9999:8080 -it jhipsterlab:latest /bin/bash ./mvnw Now your application is running in below port. http://localhost:9999 Source Code Entire project is avialble here, feel free to clone and play around. https://github.com/notesbyair/jhipster-hello-world-app</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://notesbyair.github.io//assets/blog/jhipster.png" /><media:content medium="image" url="https://notesbyair.github.io//assets/blog/jhipster.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">How to manage multiple versions of Cuda and cuDNN ?</title><link href="https://notesbyair.github.io//blog/cs/2020-05-26-installing-multiple-versions-of-cuda-cudnn/" rel="alternate" type="text/html" title="How to manage multiple versions of Cuda and cuDNN ?" /><published>2020-05-26T00:00:00+00:00</published><updated>2021-10-16T01:53:13+00:00</updated><id>https://notesbyair.github.io//blog/cs/installing-multiple-versions-of-cuda-cudnn</id><content type="html" xml:base="https://notesbyair.github.io//blog/cs/2020-05-26-installing-multiple-versions-of-cuda-cudnn/">&lt;ul&gt;
   &lt;li&gt;this unordered seed list will be replaced by toc as unordered list&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -135,7 +200,7 @@ ajayramesh @ ubox-r9-1804 ~/tmp/cudnn-10.2-linux-x64-v7.6.5.32
 └── texlive
 
 16 directories, 0 files
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Ajay Ramesh</name><email>notesbyair@mgmail.com</email></author><category term="cs" /><summary type="html">this unordered seed list will be replaced by toc as unordered list References First of all, I must thank two blog posts, which made my life easier. https://blog.kovalevskyi.com/multiple-version-of-cuda-libraries-on-the-same-machine-b9502d50ae77 https://www.pugetsystems.com/labs/hpc/How-to-install-CUDA-9-2-on-Ubuntu-18-04-1184/ Get Started Why we are doing this ? Suppose you want to run some old projects from GitHub. Experiment with new versions of CUDA, and experiment new features of it. CUDA installation Before starting, we need to download CUDA and follow steps from NVIDIA for right version. The most important steps to follow during CUDA installation. Do not install CUDA drivers from CUDA-toolkit. Manually install the latest drivers for your graphics card. Do not create the symbolic link during installation process, since we need multiple versions. Automation Script The blogs that I mentioned earlier help a lot, and then I added the below script to make my life even more accessible. touch ~/.bashrc add below contents to bottom of the file # add below to your env bash file. function _switch_cuda { v=$1 export PATH=$PATH:/usr/local/cuda-$v/bin export CUDADIR=/usr/local/cuda-$v export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-$v/lib64 nvcc --version } _switch_cuda 10.1 # change the version of your like to load bash. cuDNN installation on all CUDA versions. Finally, Installing cuDNN is just like copying the source header files into the respective CUDA toolkit path. Download and extract the cuDNN tar file, then run below script to copy lib into right CUDA Dirs. After extraction of cudnn zip, create cudnn_install.sh file and place it like below. ajayramesh @ ubox-r9-1804 ~/tmp/cudnn-10.2-linux-x64-v7.6.5.32 └─ $ ▶ tree -L 2 . ├── cuda │   ├── include │   ├── lib64 │   └── NVIDIA_SLA_cuDNN_Support.txt └── cudnn_install.sh 3 directories, 2 files Script to move cuDNN to right folders Add below content to new cudnn_install.sh and run this command chmod +x cudnn_install.sh &amp;amp; sudo ./cudnn_install.sh on extracted cuDNN zip folder read -p &quot;CUDA-version: &quot; ver cp cuda/include/cudnn.h /usr/local/cuda-&quot;${ver}&quot;/include cp cuda/lib64/libcudnn* /usr/local/cuda-&quot;${ver}&quot;/lib64 chmod a+r /usr/local/cuda*/include/cudnn.h /usr/local/cuda*/lib64/libcudnn* Final Results My current system now got CUDA 9.0 to 10.2 versions. ajayramesh @ ubox-r9-1804 /usr/local └─ $ ▶ tree -L 1 . ├── bin ├── cuda-10.0 ├── cuda-10.1 ├── cuda-10.2 ├── cuda-9.0 ├── cuda-9.1 ├── cuda-9.2 ├── etc ├── games ├── include ├── lib ├── man -&amp;gt; share/man ├── sbin ├── share ├── src └── texlive 16 directories, 0 files</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://notesbyair.github.io//assets/blog/nvidia.jpg" /><media:content medium="image" url="https://notesbyair.github.io//assets/blog/nvidia.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Solid Design Principle Revisit</title><link href="https://notesbyair.github.io//blog/cs/2020-05-23-solid-design-principle-revisit/" rel="alternate" type="text/html" title="Solid Design Principle Revisit" /><published>2020-05-23T00:00:00+00:00</published><updated>2021-07-30T04:04:39+00:00</updated><id>https://notesbyair.github.io//blog/cs/solid-design-principle-revisit</id><content type="html" xml:base="https://notesbyair.github.io//blog/cs/2020-05-23-solid-design-principle-revisit/">&lt;ul id=&quot;markdown-toc&quot;&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Ajay Ramesh</name><email>notesbyair@mgmail.com</email></author><category term="cs" /><summary type="html">this unordered seed list will be replaced by toc as unordered list References First of all, I must thank two blog posts, which made my life easier. https://blog.kovalevskyi.com/multiple-version-of-cuda-libraries-on-the-same-machine-b9502d50ae77 https://www.pugetsystems.com/labs/hpc/How-to-install-CUDA-9-2-on-Ubuntu-18-04-1184/ Get Started Why we are doing this ? Suppose you want to run some old projects from GitHub. Experiment with new versions of CUDA, and experiment new features of it. CUDA installation Before starting, we need to download CUDA and follow steps from NVIDIA for right version. The most important steps to follow during CUDA installation. Do not install CUDA drivers from CUDA-toolkit. Manually install the latest drivers for your graphics card. Do not create the symbolic link during installation process, since we need multiple versions. Automation Script The blogs that I mentioned earlier help a lot, and then I added the below script to make my life even more accessible. touch ~/.bashrc add below contents to bottom of the file # add below to your env bash file. function _switch_cuda { v=$1 export PATH=$PATH:/usr/local/cuda-$v/bin export CUDADIR=/usr/local/cuda-$v export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-$v/lib64 nvcc --version } _switch_cuda 10.1 # change the version of your like to load bash. cuDNN installation on all CUDA versions. Finally, Installing cuDNN is just like copying the source header files into the respective CUDA toolkit path. Download and extract the cuDNN tar file, then run below script to copy lib into right CUDA Dirs. After extraction of cudnn zip, create cudnn_install.sh file and place it like below. ajayramesh @ ubox-r9-1804 ~/tmp/cudnn-10.2-linux-x64-v7.6.5.32 └─ $ ▶ tree -L 2 . ├── cuda │   ├── include │   ├── lib64 │   └── NVIDIA_SLA_cuDNN_Support.txt └── cudnn_install.sh 3 directories, 2 files Script to move cuDNN to right folders Add below content to new cudnn_install.sh and run this command chmod +x cudnn_install.sh &amp;amp; sudo ./cudnn_install.sh on extracted cuDNN zip folder read -p &quot;CUDA-version: &quot; ver cp cuda/include/cudnn.h /usr/local/cuda-&quot;${ver}&quot;/include cp cuda/lib64/libcudnn* /usr/local/cuda-&quot;${ver}&quot;/lib64 chmod a+r /usr/local/cuda*/include/cudnn.h /usr/local/cuda*/lib64/libcudnn* Final Results My current system now got CUDA 9.0 to 10.2 versions. ajayramesh @ ubox-r9-1804 /usr/local └─ $ ▶ tree -L 1 . ├── bin ├── cuda-10.0 ├── cuda-10.1 ├── cuda-10.2 ├── cuda-9.0 ├── cuda-9.1 ├── cuda-9.2 ├── etc ├── games ├── include ├── lib ├── man -&amp;gt; share/man ├── sbin ├── share ├── src └── texlive 16 directories, 0 files</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://notesbyair.github.io//assets/blog/nvidia.jpg" /><media:content medium="image" url="https://notesbyair.github.io//assets/blog/nvidia.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Solid Design Principle Revisit</title><link href="https://notesbyair.github.io//blog/cs/2020-05-23-solid-design-principle-revisit/" rel="alternate" type="text/html" title="Solid Design Principle Revisit" /><published>2020-05-23T00:00:00+00:00</published><updated>2021-10-16T01:53:13+00:00</updated><id>https://notesbyair.github.io//blog/cs/solid-design-principle-revisit</id><content type="html" xml:base="https://notesbyair.github.io//blog/cs/2020-05-23-solid-design-principle-revisit/">&lt;ul id=&quot;markdown-toc&quot;&gt;
   &lt;li&gt;&lt;a href=&quot;#single-responsibility-principle&quot; id=&quot;markdown-toc-single-responsibility-principle&quot;&gt;Single-Responsibility Principle&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#open-closed-principle&quot; id=&quot;markdown-toc-open-closed-principle&quot;&gt;Open-closed Principle&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#liskov-substitution-principle&quot; id=&quot;markdown-toc-liskov-substitution-principle&quot;&gt;Liskov substitution principle&lt;/a&gt;&lt;/li&gt;

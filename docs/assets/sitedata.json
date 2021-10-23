@@ -66,10 +66,10 @@
       "url": "/blog/cs/2020-05-26-installing-multiple-versions-of-cuda-cudnn/"
     },{
       "image": "/assets/blog/jhipster.png",
-      "title": "How to test the JHipster using Docker ?",
+      "title": "Try JHipster using Docker",
       "date": "2021-07-29 00:00:00 +0000",
-      "description": "I am writing this blog to give some insights on managing multiple versions of Cuda and some links.\n",
-      "content": "\n  how to update the Jhipster apps ?\n  final toc\n  conclusion\n\n\ntesting this …\nI created this docker image, using which you can quickly test the Jhipster docker …\n\nhttps://www.jhipster.tech/\n\nFROM notesbyair/jhipster:1\nRUN mkdir app\nCOPY app.jdl /app\nCOPY git-init.sh /app\nCOPY bootstrap.sh /app\nRUN cd /app\nRUN export NG_CLI_ANALYTICS=ci\nWORKDIR  /app\nRUN [ \"jhipster\", \"jdl\", \"app.jdl\", \"--no-insight\"]\n# ENTRYPOINT [ \"./mvnw\" ]\n# CMD ls -lrth\n# CMD [\"./mvnw\"]\n\n\nhow to update the Jhipster apps ?\n\nthe thing which makes so confusing is to updating the app ?\n\nfinal toc\n\nconclusion\n",
+      "description": "This blog is written to help you to test JHipster, without worrying much about installation of it. It’s been a year with Jhipster, as a token of appreciation to community, writing this blog for those who wants to try out this platform quickly.\n",
+      "content": "\n  Pre-requirements\n  Step 0.1: Create Docker file\n  Step 0.2: Create app.jdl file\n  Step 1: Build the Container\n  Step 2: Run the Jhipster App\n  Source Code\n\n\nJHipster  is a development platform to quickly generate, develop, &amp; deploy modern web applications &amp; microservice architectures.\nIt’s been a year with Jhipster, as a token of appreciation to community, writing this blog for those who wants to try out this platform quickly.\n\nPre-requirements\n\n  Docker - Done\n\n\nStep 0.1: Create Docker file\n\nCreate a file, name it as Dockerfile, add below content.\nFROM node:14.16\nRUN apt-get update &amp;&amp; apt-get install -y libasound2 libxtst6\nRUN wget https://download.bell-sw.com/java/11.0.11+9/bellsoft-jdk11.0.11+9-linux-amd64.deb &amp;&amp; \\\n    apt install ./bellsoft-jdk11.0.11+9-linux-amd64.deb \n\nRUN npm install -g generator-jhipster\n\nRUN  [ \"java\", \"-version\" ]\nRUN jhipster --version\n\nRUN mkdir app\nCOPY app.jdl /app\nRUN cd /app\nRUN export NG_CLI_ANALYTICS=ci\nWORKDIR  /app\nRUN [ \"jhipster\", \"jdl\", \"app.jdl\", \"--no-insight\"]\n\n\nStep 0.2: Create app.jdl file\nJDL - JHipster Domain Language to define your app, for more try this jdl-studio\nI wanted to keep it simple and short, so here I am creating entity News to store news.\n\napplication {\n  config {\n    applicationType monolith\n    authenticationType jwt\n    baseName NewsFeed\n    buildTool maven\n    clientFramework angularX\n    clientTheme yeti\n    clientPackageManager npm\n    databaseType sql\n    devDatabaseType h2Disk\n    dtoSuffix DTO\n    enableHibernateCache true\n    enableSwaggerCodegen true\n    enableTranslation false\n    jhiPrefix hg\n    packageName com.news.app\n    prodDatabaseType postgresql\n    reactive false\n    searchEngine false\n    serverPort 8080\n    serviceDiscoveryType no\n    skipClient false\n    skipServer false\n    testFrameworks []\n    websocket false\n  }\n  entities *\n}\n\nentity News {\n  name String\n  icon ImageBlob\n  date LocalDate\n  content TextBlob\n}\n\n\nStep 1: Build the Container\nFirst let’s build the container, which installs the JHipster in local, creates the application with News entity.\ndocker build -t jhipsterlab:latest .   \n\nStep 2: Run the Jhipster App\n\ndocker container run --name jhipsterLab -p 9999:8080  -it jhipsterlab:latest  /bin/bash ./mvnw\n\nNow your application is running in below port.\nhttp://localhost:9999\n\n\n\nSource Code\n\nEntire project is avialble here, feel free to clone and play around.\nhttps://github.com/notesbyair/jhipster-hello-world-app\n",
       "categories": ["cs"],
       "tags": [],
       
@@ -78,7 +78,7 @@
     },{
       
       "title": "cs",
-      "date": "2021-10-16 01:47:05 +0000",
+      "date": "2021-10-23 00:57:42 +0000",
       "description": "All Computer Science related blogs\n",
       "content": "Work in progress …\n",
       "categories": [],
