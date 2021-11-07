@@ -76,9 +76,31 @@
       "collection": "posts",
       "url": "/blog/cs/2021-07-29-Jhipster-docker/"
     },{
+      "image": "/assets/blog/10-2021/mindmap.png",
+      "title": "My fav technologies mind map",
+      "date": "2021-10-31 00:00:00 -0500",
+      "description": "Let me list my favorite tecnology stack as a mind map, feel free to suggest any edits.\n",
+      "content": "Today, I wanted to create a Mind map on all technologies, so here I am with this mind map diagram. Feel free to suggest any technology!\n\n\n\nReferences -\n\n  https://stackshare.io/feed\n  https://db-engines.com/en/ranking\n  Image by akitada31 from Pixabay\n\n",
+      "categories": ["cs"],
+      "tags": [],
+      
+      "collection": "posts",
+      "url": "/blog/cs/2021-10-31-my-fav-technologies-mind-map/"
+    },{
+      "image": "/assets/blog/2021/screenshot.jpg",
+      "title": "How to map a Java Bean using mapstruct library ?",
+      "date": "2021-11-07 00:00:00 -0500",
+      "description": "Five min introduction on mapstruct for Java Bean Mapping.\n",
+      "content": "\n  Why mapping ?\n  Example Project Setup\n  How to map using mapstruct annotation ?\n  Testing\n  How it works ?\n  References\n  Conclusion\n\n\nThis blog, I am going to show a simple example for the understanding on Java Bean Mapping.\n\nWhy mapping ?\n\n  Convert Java Bean/POJO to Another Bean/POJO with different names.\n  Create Report Json with additional calculations.\n  For using DTO Design Pattern.\n\n\nExample Project Setup\n\ngit clone https://github.com/notesbyair/blog.mapstruct.git\n\n\nIn this example, we have a Java Bean - Car, we want to convert it to `CarDTO object where it is has different names for mapping.\n\n\n\nHow to map using mapstruct annotation ?\n\nDefine a mapper interface for above conversion, it will convert Car to CarDto. The mapstruct library generates the implementations for it.\n\nIn below interface source:Car, target: CarDto.\n\n// file: \"CarMapper.java\"\nimport org.mapstruct.Mapper;\nimport org.mapstruct.Mapping;\nimport org.mapstruct.factory.Mappers;\n\n@Mapper\npublic interface CarMapper {\n    CarMapper INSTANCE = Mappers.getMapper( CarMapper.class );\n    @Mapping(target = \"seats\", source = \"seatConfiguration\")\n    CarDto convert(Car car);\n\n    @Mapping(source = \"numberOfSeats\", target = \"seatCount\")\n    @Mapping(source = \"seatMaterial\", target = \"material\")\n    SeatConfigurationDto seatConfigurationToSeatConfigurationDto(SeatConfiguration seatConfiguration);\n}\n\nCarMapper for Converting Car to CarDTO\n\nTesting\n@Test\nvoid testMapping() {\n  Car car = new Car();\n  car.setMake(\"Tesla\");\n  car.setType(CarType.SPORTS);\n  car.setSeatConfiguration(new SeatConfiguration(1, SeatMaterial.LEATHER));\n  CarDto carDTO = CarMapper.INSTANCE.convert(car);\n  assertEquals(car.getMake(), carDTO.getMake());\n  assertEquals(car.getType().toString(), carDTO.getType());\n  assertEquals(car.getSeatConfiguration().getSeatMaterial().toString(),\n      carDTO.getSeats().getMaterial());\n}\n\n\nHow it works ?\n\n  If Source and Target bean contains same name, then it will convert directly, for example make is same name in both beans. For all other, you need to define a names using mapping annotation like shown in above.\n  You need to define another mapping, which will convert the seatConfiguration. For more, refer this section of the blog post\n    \n      Mapping Beans with Child Beans  \n    \n  \n\n\nReferences\n\n\n  Quick Guide to MapStruct\n  https://mapstruct.org/\n  https://mapstruct.org/documentation/installation/\n\n\nConclusion\n\nUsing mapstruct, we can easily map Java Beans/POJO using less number of codes. Hope this gives nice introduction, let me know for any doubts here.\n",
+      "categories": ["cs"],
+      "tags": [],
+      
+      "collection": "posts",
+      "url": "/blog/cs/2021-11-07-MapStruct-Tutorial/"
+    },{
       
       "title": "cs",
-      "date": "2021-10-29 07:32:20 -0500",
+      "date": "2021-11-07 07:07:23 -0600",
       "description": "Computer Science Blogs\n",
       "content": "\n",
       "categories": [],
