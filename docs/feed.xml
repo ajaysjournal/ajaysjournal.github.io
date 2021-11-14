@@ -1,4 +1,77 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="https://notesbyair.github.io//feed.xml" rel="self" type="application/atom+xml" /><link href="https://notesbyair.github.io//" rel="alternate" type="text/html" hreflang="en" /><updated>2021-11-07T07:07:23-06:00</updated><id>https://notesbyair.github.io//feed.xml</id><title type="html">Notes by Air</title><subtitle></subtitle><author><name>Ajay Ramesh</name><email>notesbyair@mgmail.com</email></author><entry><title type="html">How to map a Java Bean using mapstruct library ?</title><link href="https://notesbyair.github.io//blog/cs/2021-11-07-MapStruct-Tutorial/" rel="alternate" type="text/html" title="How to map a Java Bean using mapstruct library ?" /><published>2021-11-07T00:00:00-05:00</published><updated>2021-11-07T07:04:20-06:00</updated><id>https://notesbyair.github.io//blog/cs/MapStruct-Tutorial</id><content type="html" xml:base="https://notesbyair.github.io//blog/cs/2021-11-07-MapStruct-Tutorial/">&lt;ol id=&quot;markdown-toc&quot;&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-11-14T13:37:01-06:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Notes by Air</title><subtitle></subtitle><author><name>Ajay Ramesh</name><email>notesbyair@mgmail.com</email></author><entry><title type="html">What is present inside a Video ?</title><link href="http://localhost:4000/blog/cs/2021-11-14-understanding-video-content-type-basics/" rel="alternate" type="text/html" title="What is present inside a Video ?" /><published>2021-11-14T00:00:00-06:00</published><updated>2021-11-14T13:37:00-06:00</updated><id>http://localhost:4000/blog/cs/understanding-video-content-type-basics</id><content type="html" xml:base="http://localhost:4000/blog/cs/2021-11-14-understanding-video-content-type-basics/">&lt;ol id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#lab&quot; id=&quot;markdown-toc-lab&quot;&gt;Lab&lt;/a&gt;    &lt;ol&gt;
+      &lt;li&gt;&lt;a href=&quot;#container-information&quot; id=&quot;markdown-toc-container-information&quot;&gt;Container information&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#codec-information&quot; id=&quot;markdown-toc-codec-information&quot;&gt;Codec information&lt;/a&gt;&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#concepts&quot; id=&quot;markdown-toc-concepts&quot;&gt;Concepts&lt;/a&gt;    &lt;ol&gt;
+      &lt;li&gt;&lt;a href=&quot;#what-is-codec-and-how-it-works-&quot; id=&quot;markdown-toc-what-is-codec-and-how-it-works-&quot;&gt;What is codec and how it works ?&lt;/a&gt;&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#further-reading&quot; id=&quot;markdown-toc-further-reading&quot;&gt;Further reading&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Video contains two main parts, &lt;strong&gt;Codec&lt;/strong&gt; and &lt;strong&gt;Container.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p class=&quot;note&quot;&gt;&lt;strong&gt;Container:&lt;/strong&gt; - we can find out easily by looking at video file extension.
+&lt;strong&gt;Codec:&lt;/strong&gt; - Software to Compresses or De-Compresses the Video.
+&lt;img src=&quot;/assets/blog/2021/11-14/image/image-2.png&quot; alt=&quot;image.png&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;lab&quot;&gt;Lab&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Use any video or download a sample video file from this location - &lt;a href=&quot;https://file-examples-com.github.io/uploads/2017/04/file_example_MP4_480_1_5MG.mp4&quot;&gt;MP4-Sample video&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;Download the &lt;a href=&quot;https://mediaarea.net/en/MediaInfo&quot;&gt;MediaInfo Software&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;container-information&quot;&gt;Container information&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;If you see below, it contains three parts.&lt;/li&gt;
+  &lt;li&gt;&lt;img src=&quot;/assets/blog/2021/11-14/image/image.png&quot; alt=&quot;image-1.png&quot; /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;codec-information&quot;&gt;Codec information&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;How video is compressed? Here, this sample video is using H264 codec to compress the video.&lt;/li&gt;
+  &lt;li&gt;In below, you see Codec Information about video file using Media Info.&lt;/li&gt;
+  &lt;li&gt;&lt;img src=&quot;/assets/blog/2021/11-14/image/image-1.png&quot; alt=&quot;image-2.png&quot; /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;concepts&quot;&gt;Concepts&lt;/h2&gt;
+
+&lt;h3 id=&quot;what-is-codec-and-how-it-works-&quot;&gt;What is codec and how it works ?&lt;/h3&gt;
+
+&lt;p&gt;Codec is the reason we can play, store or stream the video, there are tons of codecs available today.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Video is a series of images.
+    &lt;ul&gt;
+      &lt;li&gt;&lt;strong&gt;Main Idea:&lt;/strong&gt; Most experts have a tough time agreeing on an exact number, but the conclusion is that most humans can see at a rate of 30 to 60 frames per second.&lt;/li&gt;
+      &lt;li&gt;Video player plays these images one by one based on time.
+        &lt;ul&gt;
+          &lt;li&gt;So, we can optimize on how we are going to save the Video, right ? We don’t need to save 30-60 images per second.&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;How to save these images as video file ? What Algorithm works ?
+    &lt;ul&gt;
+      &lt;li&gt;Humans invented the Codecs, which compresses/de-compresses the video file using many techniques in computer vision.&lt;/li&gt;
+      &lt;li&gt;Simple example of one technique to compress series of images with &lt;a href=&quot;https://youtu.be/PmoEsPWEdOA?t=256&quot;&gt; visualization video is here  &lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;further-reading&quot;&gt;Further reading&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.vcodex.com/an-overview-of-h264-advanced-video-coding/&quot;&gt;H264 Overview&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.salientsys.com/assets/uploads/docs/Understanding_H_264.pdf&quot;&gt;Understanding H264&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Discrete_cosine_transform&quot;&gt;Discrete cosine transform&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://caseguard.com/articles/how-many-frames-per-second-can-the-human-eye-see/#:~:text=Most%20experts%20have%20a%20tough,than%2060%20frames%20per%20second.&quot;&gt;How many frames per second&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;</content><author><name>Ajay Ramesh</name><email>notesbyair@mgmail.com</email></author><category term="cs" /><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/blog/2021/screenshot.jpg" /><media:content medium="image" url="http://localhost:4000/assets/blog/2021/screenshot.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">How to map a Java Bean using mapstruct library ?</title><link href="http://localhost:4000/blog/cs/2021-11-07-MapStruct-Tutorial/" rel="alternate" type="text/html" title="How to map a Java Bean using mapstruct library ?" /><published>2021-11-07T00:00:00-05:00</published><updated>2021-11-07T07:04:20-06:00</updated><id>http://localhost:4000/blog/cs/MapStruct-Tutorial</id><content type="html" xml:base="http://localhost:4000/blog/cs/2021-11-07-MapStruct-Tutorial/">&lt;ol id=&quot;markdown-toc&quot;&gt;
   &lt;li&gt;&lt;a href=&quot;#why-mapping-&quot; id=&quot;markdown-toc-why-mapping-&quot;&gt;Why mapping ?&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#example-project-setup&quot; id=&quot;markdown-toc-example-project-setup&quot;&gt;Example Project Setup&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#how-to-map-using-mapstruct-annotation-&quot; id=&quot;markdown-toc-how-to-map-using-mapstruct-annotation-&quot;&gt;How to map using mapstruct annotation ?&lt;/a&gt;&lt;/li&gt;
@@ -85,7 +158,7 @@
 
 &lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
 
-&lt;p&gt;Using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mapstruct&lt;/code&gt;, we can easily map Java Beans/POJO using less number of codes. Hope this gives nice introduction, let me know for any doubts here.&lt;/p&gt;</content><author><name>Ajay Ramesh</name><email>notesbyair@mgmail.com</email></author><category term="cs" /><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://notesbyair.github.io//assets/blog/2021/screenshot.jpg" /><media:content medium="image" url="https://notesbyair.github.io//assets/blog/2021/screenshot.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">My fav technologies mind map</title><link href="https://notesbyair.github.io//blog/cs/2021-10-31-my-fav-technologies-mind-map/" rel="alternate" type="text/html" title="My fav technologies mind map" /><published>2021-10-31T00:00:00-05:00</published><updated>2021-10-31T20:50:33-05:00</updated><id>https://notesbyair.github.io//blog/cs/my-fav-technologies-mind-map</id><content type="html" xml:base="https://notesbyair.github.io//blog/cs/2021-10-31-my-fav-technologies-mind-map/">&lt;p&gt;Today, I wanted to create a Mind map on all technologies, so here I am with this mind map diagram. Feel free to suggest any technology!&lt;/p&gt;
+&lt;p&gt;Using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mapstruct&lt;/code&gt;, we can easily map Java Beans/POJO using less number of codes. Hope this gives nice introduction, let me know for any doubts here.&lt;/p&gt;</content><author><name>Ajay Ramesh</name><email>notesbyair@mgmail.com</email></author><category term="cs" /><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/blog/2021/screenshot.jpg" /><media:content medium="image" url="http://localhost:4000/assets/blog/2021/screenshot.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">My fav technologies mind map</title><link href="http://localhost:4000/blog/cs/2021-10-31-my-fav-technologies-mind-map/" rel="alternate" type="text/html" title="My fav technologies mind map" /><published>2021-10-31T00:00:00-05:00</published><updated>2021-10-31T20:50:33-05:00</updated><id>http://localhost:4000/blog/cs/my-fav-technologies-mind-map</id><content type="html" xml:base="http://localhost:4000/blog/cs/2021-10-31-my-fav-technologies-mind-map/">&lt;p&gt;Today, I wanted to create a Mind map on all technologies, so here I am with this mind map diagram. Feel free to suggest any technology!&lt;/p&gt;
 
 &lt;p class=&quot;figure&quot;&gt;&lt;img src=&quot;/assets/blog/10-2021/solutions.png&quot; alt=&quot;Full-width image&quot; /&gt;&lt;/p&gt;
 
@@ -94,7 +167,7 @@
   &lt;li&gt;https://stackshare.io/feed&lt;/li&gt;
   &lt;li&gt;https://db-engines.com/en/ranking&lt;/li&gt;
   &lt;li&gt;Image by &lt;a href=&quot;https://pixabay.com/users/akitada31-172067/?utm_source=link-attribution&amp;amp;utm_medium=referral&amp;amp;utm_campaign=image&amp;amp;utm_content=6238107&quot;&gt;akitada31&lt;/a&gt; from &lt;a href=&quot;https://pixabay.com/?utm_source=link-attribution&amp;amp;utm_medium=referral&amp;amp;utm_campaign=image&amp;amp;utm_content=6238107&quot;&gt;Pixabay&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;</content><author><name>Ajay Ramesh</name><email>notesbyair@mgmail.com</email></author><category term="cs" /><summary type="html">Today, I wanted to create a Mind map on all technologies, so here I am with this mind map diagram. Feel free to suggest any technology!</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://notesbyair.github.io//assets/blog/10-2021/mindmap.png" /><media:content medium="image" url="https://notesbyair.github.io//assets/blog/10-2021/mindmap.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Try JHipster using Docker</title><link href="https://notesbyair.github.io//blog/cs/2021-07-29-Jhipster-docker/" rel="alternate" type="text/html" title="Try JHipster using Docker" /><published>2021-07-29T00:00:00-05:00</published><updated>2021-10-29T07:38:56-05:00</updated><id>https://notesbyair.github.io//blog/cs/Jhipster-docker</id><content type="html" xml:base="https://notesbyair.github.io//blog/cs/2021-07-29-Jhipster-docker/">&lt;ul id=&quot;markdown-toc&quot;&gt;
+&lt;/ol&gt;</content><author><name>Ajay Ramesh</name><email>notesbyair@mgmail.com</email></author><category term="cs" /><summary type="html">Today, I wanted to create a Mind map on all technologies, so here I am with this mind map diagram. Feel free to suggest any technology!</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/blog/10-2021/mindmap.png" /><media:content medium="image" url="http://localhost:4000/assets/blog/10-2021/mindmap.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Try JHipster using Docker</title><link href="http://localhost:4000/blog/cs/2021-07-29-Jhipster-docker/" rel="alternate" type="text/html" title="Try JHipster using Docker" /><published>2021-07-29T00:00:00-05:00</published><updated>2021-10-29T07:38:56-05:00</updated><id>http://localhost:4000/blog/cs/Jhipster-docker</id><content type="html" xml:base="http://localhost:4000/blog/cs/2021-07-29-Jhipster-docker/">&lt;ul id=&quot;markdown-toc&quot;&gt;
   &lt;li&gt;&lt;a href=&quot;#pre-requirements&quot; id=&quot;markdown-toc-pre-requirements&quot;&gt;Pre-requirements&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#step-01-create-docker-file&quot; id=&quot;markdown-toc-step-01-create-docker-file&quot;&gt;Step 0.1: Create Docker file&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#step-02-create-appjdl-file&quot; id=&quot;markdown-toc-step-02-create-appjdl-file&quot;&gt;Step 0.2: Create app.jdl file&lt;/a&gt;&lt;/li&gt;
@@ -190,7 +263,7 @@ entity News {
 &lt;h2 id=&quot;source-code&quot;&gt;Source Code&lt;/h2&gt;
 
 &lt;p&gt;Entire project is avialble here, feel free to clone and play around.
-&lt;a href=&quot;https://github.com/notesbyair/jhipster-hello-world-app&quot;&gt;https://github.com/notesbyair/jhipster-hello-world-app&lt;/a&gt;&lt;/p&gt;</content><author><name>Ajay Ramesh</name><email>notesbyair@mgmail.com</email></author><category term="cs" /><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://notesbyair.github.io//assets/blog/jhipster.png" /><media:content medium="image" url="https://notesbyair.github.io//assets/blog/jhipster.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">How to manage multiple versions of Cuda and cuDNN ?</title><link href="https://notesbyair.github.io//blog/cs/2020-05-26-installing-multiple-versions-of-cuda-cudnn/" rel="alternate" type="text/html" title="How to manage multiple versions of Cuda and cuDNN ?" /><published>2020-05-26T00:00:00-05:00</published><updated>2021-10-15T20:49:58-05:00</updated><id>https://notesbyair.github.io//blog/cs/installing-multiple-versions-of-cuda-cudnn</id><content type="html" xml:base="https://notesbyair.github.io//blog/cs/2020-05-26-installing-multiple-versions-of-cuda-cudnn/">&lt;ul&gt;
+&lt;a href=&quot;https://github.com/notesbyair/jhipster-hello-world-app&quot;&gt;https://github.com/notesbyair/jhipster-hello-world-app&lt;/a&gt;&lt;/p&gt;</content><author><name>Ajay Ramesh</name><email>notesbyair@mgmail.com</email></author><category term="cs" /><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/blog/jhipster.png" /><media:content medium="image" url="http://localhost:4000/assets/blog/jhipster.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">How to manage multiple versions of Cuda and cuDNN ?</title><link href="http://localhost:4000/blog/cs/2020-05-26-installing-multiple-versions-of-cuda-cudnn/" rel="alternate" type="text/html" title="How to manage multiple versions of Cuda and cuDNN ?" /><published>2020-05-26T00:00:00-05:00</published><updated>2021-10-15T20:49:58-05:00</updated><id>http://localhost:4000/blog/cs/installing-multiple-versions-of-cuda-cudnn</id><content type="html" xml:base="http://localhost:4000/blog/cs/2020-05-26-installing-multiple-versions-of-cuda-cudnn/">&lt;ul&gt;
   &lt;li&gt;this unordered seed list will be replaced by toc as unordered list&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -296,7 +369,7 @@ ajayramesh @ ubox-r9-1804 ~/tmp/cudnn-10.2-linux-x64-v7.6.5.32
 └── texlive
 
 16 directories, 0 files
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Ajay Ramesh</name><email>notesbyair@mgmail.com</email></author><category term="cs" /><summary type="html">this unordered seed list will be replaced by toc as unordered list</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://notesbyair.github.io//assets/blog/nvidia.jpg" /><media:content medium="image" url="https://notesbyair.github.io//assets/blog/nvidia.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Solid Design Principle Revisit</title><link href="https://notesbyair.github.io//blog/cs/2020-05-23-solid-design-principle-revisit/" rel="alternate" type="text/html" title="Solid Design Principle Revisit" /><published>2020-05-23T00:00:00-05:00</published><updated>2021-10-15T15:12:46-05:00</updated><id>https://notesbyair.github.io//blog/cs/solid-design-principle-revisit</id><content type="html" xml:base="https://notesbyair.github.io//blog/cs/2020-05-23-solid-design-principle-revisit/">&lt;ul id=&quot;markdown-toc&quot;&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Ajay Ramesh</name><email>notesbyair@mgmail.com</email></author><category term="cs" /><summary type="html">this unordered seed list will be replaced by toc as unordered list</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/blog/nvidia.jpg" /><media:content medium="image" url="http://localhost:4000/assets/blog/nvidia.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Solid Design Principle Revisit</title><link href="http://localhost:4000/blog/cs/2020-05-23-solid-design-principle-revisit/" rel="alternate" type="text/html" title="Solid Design Principle Revisit" /><published>2020-05-23T00:00:00-05:00</published><updated>2021-10-15T15:12:46-05:00</updated><id>http://localhost:4000/blog/cs/solid-design-principle-revisit</id><content type="html" xml:base="http://localhost:4000/blog/cs/2020-05-23-solid-design-principle-revisit/">&lt;ul id=&quot;markdown-toc&quot;&gt;
   &lt;li&gt;&lt;a href=&quot;#single-responsibility-principle&quot; id=&quot;markdown-toc-single-responsibility-principle&quot;&gt;Single-Responsibility Principle&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#open-closed-principle&quot; id=&quot;markdown-toc-open-closed-principle&quot;&gt;Open-closed Principle&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#liskov-substitution-principle&quot; id=&quot;markdown-toc-liskov-substitution-principle&quot;&gt;Liskov substitution principle&lt;/a&gt;&lt;/li&gt;
@@ -642,4 +715,4 @@ All above principles apply to this one. Here suppose you have Robot interface, t
   &lt;li&gt;&lt;a href=&quot;https://hackernoon.com/liskov-substitution-principle-a982551d584a&quot;&gt;Liskov Substitution Principle from Hackernoon&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://stackoverflow.com/questions/56860/what-is-an-example-of-the-liskov-substitution-principle&quot;&gt;Liskov Substitution Principle from Stackoverflow&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;http://web.archive.org/web/20151128004108/http://www.objectmentor.com/resources/articles/lsp.pdf&quot;&gt;Liskov Substitution Principle from Actual Paper&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Ajay Ramesh</name><email>notesbyair@mgmail.com</email></author><category term="cs" /><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://notesbyair.github.io//assets/blog/solid.jpg" /><media:content medium="image" url="https://notesbyair.github.io//assets/blog/solid.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+&lt;/ul&gt;</content><author><name>Ajay Ramesh</name><email>notesbyair@mgmail.com</email></author><category term="cs" /><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/blog/solid.jpg" /><media:content medium="image" url="http://localhost:4000/assets/blog/solid.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
