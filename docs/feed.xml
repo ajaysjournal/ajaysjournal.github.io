@@ -1,22 +1,89 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="https://notesbyair.github.io//feed.xml" rel="self" type="application/atom+xml" /><link href="https://notesbyair.github.io//" rel="alternate" type="text/html" hreflang="en" /><updated>2021-11-21T20:52:57-06:00</updated><id>https://notesbyair.github.io//feed.xml</id><title type="html">Notes by Air</title><subtitle></subtitle><author><name>Ajay Ramesh</name><email>notesbyair@mgmail.com</email></author><entry><title type="html">Simple basic metrics to measure the AI model performance</title><link href="https://notesbyair.github.io//blog/cs/2021-11-21-simple-basic-metrics-to-measure-the-AI-model-performance/" rel="alternate" type="text/html" title="Simple basic metrics to measure the AI model performance" /><published>2021-11-21T00:00:00-06:00</published><updated>2021-11-21T20:48:41-06:00</updated><id>https://notesbyair.github.io//blog/cs/simple-basic-metrics-to-measure-the-AI-model-performance</id><content type="html" xml:base="https://notesbyair.github.io//blog/cs/2021-11-21-simple-basic-metrics-to-measure-the-AI-model-performance/">&lt;ol id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#simple-basic-metrics-to-measure-the-ai-model-performance&quot; id=&quot;markdown-toc-simple-basic-metrics-to-measure-the-ai-model-performance&quot;&gt;Simple basic metrics to measure the AI model performance&lt;/a&gt;    &lt;ol&gt;
-      &lt;li&gt;&lt;a href=&quot;#terms---tp-tn-fp-fn&quot; id=&quot;markdown-toc-terms---tp-tn-fp-fn&quot;&gt;Terms - TP, TN, FP, FN&lt;/a&gt;        &lt;ol&gt;
-          &lt;li&gt;&lt;a href=&quot;#true-positive-and-true-negative&quot; id=&quot;markdown-toc-true-positive-and-true-negative&quot;&gt;True Positive and True Negative&lt;/a&gt;&lt;/li&gt;
-          &lt;li&gt;&lt;a href=&quot;#false-positive-and-false-negative&quot; id=&quot;markdown-toc-false-positive-and-false-negative&quot;&gt;False Positive and False Negative&lt;/a&gt;&lt;/li&gt;
-        &lt;/ol&gt;
-      &lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#metrics&quot; id=&quot;markdown-toc-metrics&quot;&gt;Metrics&lt;/a&gt;        &lt;ol&gt;
-          &lt;li&gt;&lt;a href=&quot;#accuracy&quot; id=&quot;markdown-toc-accuracy&quot;&gt;Accuracy&lt;/a&gt;&lt;/li&gt;
-          &lt;li&gt;&lt;a href=&quot;#recall&quot; id=&quot;markdown-toc-recall&quot;&gt;Recall&lt;/a&gt;&lt;/li&gt;
-          &lt;li&gt;&lt;a href=&quot;#precision&quot; id=&quot;markdown-toc-precision&quot;&gt;Precision&lt;/a&gt;&lt;/li&gt;
-        &lt;/ol&gt;
-      &lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#references&quot; id=&quot;markdown-toc-references&quot;&gt;References&lt;/a&gt;&lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/li&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="https://notesbyair.github.io//feed.xml" rel="self" type="application/atom+xml" /><link href="https://notesbyair.github.io//" rel="alternate" type="text/html" hreflang="en" /><updated>2021-11-28T17:29:14-06:00</updated><id>https://notesbyair.github.io//feed.xml</id><title type="html">Notes by Air</title><subtitle></subtitle><author><name>Ajay Ramesh</name><email>notesbyair@mgmail.com</email></author><entry><title type="html">How to plot AUC - ROC Curve using Python?</title><link href="https://notesbyair.github.io//blog/cs/2021-11-26-/" rel="alternate" type="text/html" title="How to plot AUC - ROC Curve using Python?" /><published>2021-11-26T00:00:00-06:00</published><updated>2021-11-28T17:28:45-06:00</updated><id>https://notesbyair.github.io//blog/cs/</id><content type="html" xml:base="https://notesbyair.github.io//blog/cs/2021-11-26-/">&lt;p&gt;In this example, we are using Classification problem, where you need to classify  on breast cancer based some input data.&lt;/p&gt;
+
+&lt;h3 id=&quot;working-code&quot;&gt;Working code&lt;/h3&gt;
+&lt;p&gt;Try this in Google Collaborator Lab&lt;sup id=&quot;fnref:2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;, or any Python environment to get started.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;svm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datasets&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;metrics&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn.linear_model&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LogisticRegression&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn.model_selection&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train_test_split&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn.datasets&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;load_breast_cancer&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Load Data
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;breast_cancer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;load_breast_cancer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;breast_cancer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;breast_cancer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Split the Dataset to Train and Test
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_test&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train_test_split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;test_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.33&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;random_state&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;44&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Train the Model 
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clf&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LogisticRegression&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;penalty&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'l2'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;C&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;clf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;y_pred&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;clf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;predict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Test the model using AOC-ROC Graph
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y_pred_proba&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;clf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;predict_proba&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[::,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;fpr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tpr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;metrics&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;roc_curve&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;y_pred_proba&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;auc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;metrics&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;roc_auc_score&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_pred_proba&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fpr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tpr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;label&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;data 1, auc=&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;auc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;legend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;output---auroc-graph&quot;&gt;Output - AUROC Graph&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/blog/2021/11-28/DraggedImage.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;h3 id=&quot;tpr---true-positive-rate&quot;&gt;TPR - True Positive Rate&lt;/h3&gt;
+
+&lt;p&gt;True positive, means model predicted Breast Cancer and that is True, for entire dataset what is the TPR ?  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;TPR = TP/TP+FN&lt;/code&gt; - it is also known as Recall, if TPR is 1 - for that particular point of time, there were no mistakes done..&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;TPR will be one, if no mistakes made by algorithm. 
+TPR is also knows as Recall/Sensitivity of Model.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;fpr---false-positive-rate&quot;&gt;FPR - False Positive Rate&lt;/h3&gt;
+&lt;p&gt;Using FPR, we can tell about the accuracy of the model performance. If it is not good, then FPR will almost equal to 1, meaning it says Breast Cancer but in actual case there is no Breast Cancer. Another example, you are not pregnant in actual case, but model says you pregnant.&lt;/p&gt;
+
+&lt;p&gt;If it is good model, then FPR should equate to 0, by making &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Specificity =1&lt;/code&gt;, that means, you have developed model which will correctly classifies, great job 🎉&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;FPR&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Specificity&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;combining-the-tpr-and-fpr--auroc&quot;&gt;Combining the TPR and FPR = AUROC&lt;/h3&gt;
+&lt;p&gt;In order to find behavior of model over test data, draw plot and see the Area under Curve value, if it near to 1 means model is fitting right, looks like you got the awesome model. In above code, I am getting Areas as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0.99..&lt;/code&gt;, which is a good model using Logistic Regression.&lt;/p&gt;
+
+&lt;h3 id=&quot;further-reading&quot;&gt;Further Reading&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://towardsdatascience.com/understanding-confusion-matrix-a9ad42dcfd62&quot;&gt;Confusion Matrix&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://towardsdatascience.com/understanding-auc-roc-curve-68b2303cc9c5&quot;&gt;Understanding Auc curve&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://notesbyair.github.io/blog/cs/2021-11-21-simple-basic-metrics-to-measure-the-AI-model-performance/&quot;&gt;Simple basic metrics to measure the AI model performance&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://colab.research.google.com/drive/1tRR6VatCVmpWZaHFJ47Xtyz3GzUZ1wu2?usp=sharing&quot;&gt;Code playground to test the theory…&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=4jRBRDbJemM&quot;&gt;Awesome video explanation here&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h1 id=&quot;simple-basic-metrics-to-measure-the-ai-model-performance&quot;&gt;Simple basic metrics to measure the AI model performance&lt;/h1&gt;
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:2&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;https://colab.research.google.com/drive/1tRR6VatCVmpWZaHFJ47Xtyz3GzUZ1wu2?usp=sharing &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;</content><author><name>Ajay Ramesh</name><email>notesbyair@mgmail.com</email></author><category term="cs" /><summary type="html">In this example, we are using Classification problem, where you need to classify on breast cancer based some input data.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://notesbyair.github.io//assets/blog/2021/11-28/DraggedImage.png" /><media:content medium="image" url="https://notesbyair.github.io//assets/blog/2021/11-28/DraggedImage.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Simple basic metrics to measure the AI model performance</title><link href="https://notesbyair.github.io//blog/cs/2021-11-21-simple-basic-metrics-to-measure-the-AI-model-performance/" rel="alternate" type="text/html" title="Simple basic metrics to measure the AI model performance" /><published>2021-11-21T00:00:00-06:00</published><updated>2021-11-21T20:48:41-06:00</updated><id>https://notesbyair.github.io//blog/cs/simple-basic-metrics-to-measure-the-AI-model-performance</id><content type="html" xml:base="https://notesbyair.github.io//blog/cs/2021-11-21-simple-basic-metrics-to-measure-the-AI-model-performance/">&lt;ol id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#terms---tp-tn-fp-fn&quot; id=&quot;markdown-toc-terms---tp-tn-fp-fn&quot;&gt;Terms - TP, TN, FP, FN&lt;/a&gt;    &lt;ol&gt;
+      &lt;li&gt;&lt;a href=&quot;#true-positive-and-true-negative&quot; id=&quot;markdown-toc-true-positive-and-true-negative&quot;&gt;True Positive and True Negative&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#false-positive-and-false-negative&quot; id=&quot;markdown-toc-false-positive-and-false-negative&quot;&gt;False Positive and False Negative&lt;/a&gt;&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#metrics&quot; id=&quot;markdown-toc-metrics&quot;&gt;Metrics&lt;/a&gt;    &lt;ol&gt;
+      &lt;li&gt;&lt;a href=&quot;#accuracy&quot; id=&quot;markdown-toc-accuracy&quot;&gt;Accuracy&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#recall&quot; id=&quot;markdown-toc-recall&quot;&gt;Recall&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#precision&quot; id=&quot;markdown-toc-precision&quot;&gt;Precision&lt;/a&gt;&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#references&quot; id=&quot;markdown-toc-references&quot;&gt;References&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
 
 &lt;p&gt;Today, I am going to explain basic metrics used to measure the AI Model. I wanted to keep it very short blog on this topic, after understanding the metrics hard way&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;. Since, I am writing this during COVID time, consider an example, where I build an AI Model which classifies a person report as  COVID or not.&lt;/p&gt;
 
