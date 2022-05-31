@@ -129,11 +129,33 @@
       "tags": [],
       
       "collection": "posts",
-      "url": "/blog/cs/2021-11-26-/"
+      "url": "/blog/cs/2021-11-26-ROC/"
+    },{
+      "image": "/assets/bookmark.jpg",
+      "title": "Good Links",
+      "date": "2021-12-05 00:00:00 -0600",
+      "description": "Good Links on CS\n",
+      "content": "Coming Soon…\n",
+      "categories": ["bookmarks"],
+      "tags": ["cs","bookmarks"],
+      
+      "collection": "posts",
+      "url": "/blog/bookmarks/2021-12-05-good-links/"
+    },{
+      
+      "title": "bookmarks",
+      "date": "2022-05-31 13:23:40 -0500",
+      "description": "Bookmarks - all interesting links and articles\n",
+      "content": "\n",
+      "categories": [],
+      "tags": [],
+      
+      "collection": "featured_categories",
+      "url": "/blog/bookmarks/"
     },{
       
       "title": "cs",
-      "date": "2021-11-28 17:29:14 -0600",
+      "date": "2022-05-31 13:23:40 -0500",
       "description": "Computer Science Blogs\n",
       "content": "\n",
       "categories": [],

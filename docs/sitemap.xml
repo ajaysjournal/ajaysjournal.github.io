@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>https://notesbyair.github.io//blog/bookmarks/</loc>
+<lastmod>2021-12-05T19:49:45-06:00</lastmod>
+</url>
+<url>
 <loc>https://notesbyair.github.io//blog/cs/</loc>
 <lastmod>2021-10-23T07:12:20-05:00</lastmod>
 </url>
@@ -30,11 +34,15 @@
 </url>
 <url>
 <loc>https://notesbyair.github.io//blog/cs/2021-11-21-simple-basic-metrics-to-measure-the-AI-model-performance/</loc>
-<lastmod>2021-11-21T20:48:41-06:00</lastmod>
+<lastmod>2021-12-05T20:22:31-06:00</lastmod>
 </url>
 <url>
-<loc>https://notesbyair.github.io//blog/cs/2021-11-26-/</loc>
+<loc>https://notesbyair.github.io//blog/cs/2021-11-26-ROC/</loc>
 <lastmod>2021-11-28T17:28:45-06:00</lastmod>
+</url>
+<url>
+<loc>https://notesbyair.github.io//blog/bookmarks/2021-12-05-good-links/</loc>
+<lastmod>2022-05-31T13:23:29-05:00</lastmod>
 </url>
 <url>
 <loc>https://notesbyair.github.io//projects/OAuth-Implementation/</loc>
