@@ -21,7 +21,7 @@
 // which won't change between content updates.
 // 
 // 
-const SHELL_CACHE = "shell-9.1.2--v13--sw/";
+const SHELL_CACHE = "shell-9.2.1--v13--sw/";
 
 // A separate assets cache that won't be invalidated when there's a newer version of Hydejack.
 // NOTE: Whenever you make changes to any of the files in yor `assets` folder,
@@ -29,7 +29,7 @@ const SHELL_CACHE = "shell-9.1.2--v13--sw/";
 const ASSETS_CACHE = "assets--v13--sw/";
 
 // The cache for regular content, which will be invalidated every time you make a new build.
-const CONTENT_CACHE = "content--2022-06-04T17:46:16-05:00--sw/";
+const CONTENT_CACHE = "content--2024-11-12T18:55:30-05:00--sw/";
 
 // A URL search parameter you can add to external assets to cache them in the service worker.
 const SW_CACHE_SEARCH_PARAM = "sw-cache";
@@ -47,7 +47,7 @@ const GOOGLE_FONTS = "https://fonts.googleapis.com/css?family=Roboto+Slab:700%7C
 // 
 
 const SHELL_FILES = [
-  "/assets/css/hydejack-9.1.2.css",
+  "/assets/css/hydejack-9.2.1.css",
   "/assets/js/service-worker.js",
 ];
 
@@ -312,51 +312,51 @@ const STATIC_FILES = [
   /**/"/assets/img/logo.png",
   /**/"/assets/img/sidebar-bg.jpg",
   /**/"/assets/img/swipe.svg",
-  /**/"/assets/js/0-hydejack-9.1.2.worker.js",
-  /**/"/assets/js/LEGACY-0-hydejack-9.1.2.worker.js",
-  /**/"/assets/js/LEGACY-clap-button-hydejack-9.1.2.js",
-  /**/"/assets/js/LEGACY-drawer-hydejack-9.1.2.js",
-  /**/"/assets/js/LEGACY-fetch-hydejack-9.1.2.js",
-  /**/"/assets/js/LEGACY-hydejack-9.1.2.js",
-  /**/"/assets/js/LEGACY-navbar-hydejack-9.1.2.js",
-  /**/"/assets/js/LEGACY-push-state-hydejack-9.1.2.js",
-  /**/"/assets/js/LEGACY-resize-observer-hydejack-9.1.2.js",
-  /**/"/assets/js/LEGACY-search-hydejack-9.1.2.js",
-  /**/"/assets/js/LEGACY-shadydom-hydejack-9.1.2.js",
-  /**/"/assets/js/LEGACY-toc-hydejack-9.1.2.js",
-  /**/"/assets/js/LEGACY-vendors~clap-button-hydejack-9.1.2.js",
-  /**/"/assets/js/LEGACY-vendors~drawer-hydejack-9.1.2.js",
-  /**/"/assets/js/LEGACY-vendors~drawer~push-state-hydejack-9.1.2.js",
-  /**/"/assets/js/LEGACY-vendors~drawer~push-state~search-hydejack-9.1.2.js",
-  /**/"/assets/js/LEGACY-vendors~fetch-hydejack-9.1.2.js",
-  /**/"/assets/js/LEGACY-vendors~intersection-observer-hydejack-9.1.2.js",
-  /**/"/assets/js/LEGACY-vendors~push-state-hydejack-9.1.2.js",
-  /**/"/assets/js/LEGACY-vendors~search-hydejack-9.1.2.js",
-  /**/"/assets/js/LEGACY-vendors~shadydom-hydejack-9.1.2.js",
-  /**/"/assets/js/LEGACY-vendors~webanimations-hydejack-9.1.2.js",
-  /**/"/assets/js/LEGACY-vendors~webcomponents-hydejack-9.1.2.js",
-  /**/"/assets/js/LEGACY-webcomponents-hydejack-9.1.2.js",
-  /**/"/assets/js/clap-button-hydejack-9.1.2.js",
-  /**/"/assets/js/drawer-hydejack-9.1.2.js",
-  /**/"/assets/js/fetch-hydejack-9.1.2.js",
-  /**/"/assets/js/hydejack-9.1.2.js",
-  /**/"/assets/js/navbar-hydejack-9.1.2.js",
-  /**/"/assets/js/push-state-hydejack-9.1.2.js",
-  /**/"/assets/js/resize-observer-hydejack-9.1.2.js",
-  /**/"/assets/js/search-hydejack-9.1.2.js",
-  /**/"/assets/js/shadydom-hydejack-9.1.2.js",
-  /**/"/assets/js/toc-hydejack-9.1.2.js",
-  /**/"/assets/js/vendors~clap-button-hydejack-9.1.2.js",
-  /**/"/assets/js/vendors~drawer-hydejack-9.1.2.js",
-  /**/"/assets/js/vendors~drawer~push-state-hydejack-9.1.2.js",
-  /**/"/assets/js/vendors~drawer~push-state~search-hydejack-9.1.2.js",
-  /**/"/assets/js/vendors~fetch-hydejack-9.1.2.js",
-  /**/"/assets/js/vendors~intersection-observer-hydejack-9.1.2.js",
-  /**/"/assets/js/vendors~push-state-hydejack-9.1.2.js",
-  /**/"/assets/js/vendors~search-hydejack-9.1.2.js",
-  /**/"/assets/js/vendors~shadydom-hydejack-9.1.2.js",
-  /**/"/assets/js/vendors~webanimations-hydejack-9.1.2.js",
-  /**/"/assets/js/webcomponents-hydejack-9.1.2.js",
+  /**/"/assets/js/0-hydejack-9.2.1.worker.js",
+  /**/"/assets/js/LEGACY-0-hydejack-9.2.1.worker.js",
+  /**/"/assets/js/LEGACY-clap-button-hydejack-9.2.1.js",
+  /**/"/assets/js/LEGACY-drawer-hydejack-9.2.1.js",
+  /**/"/assets/js/LEGACY-fetch-hydejack-9.2.1.js",
+  /**/"/assets/js/LEGACY-hydejack-9.2.1.js",
+  /**/"/assets/js/LEGACY-navbar-hydejack-9.2.1.js",
+  /**/"/assets/js/LEGACY-push-state-hydejack-9.2.1.js",
+  /**/"/assets/js/LEGACY-resize-observer-hydejack-9.2.1.js",
+  /**/"/assets/js/LEGACY-search-hydejack-9.2.1.js",
+  /**/"/assets/js/LEGACY-shadydom-hydejack-9.2.1.js",
+  /**/"/assets/js/LEGACY-toc-hydejack-9.2.1.js",
+  /**/"/assets/js/LEGACY-vendors~clap-button-hydejack-9.2.1.js",
+  /**/"/assets/js/LEGACY-vendors~drawer-hydejack-9.2.1.js",
+  /**/"/assets/js/LEGACY-vendors~drawer~push-state-hydejack-9.2.1.js",
+  /**/"/assets/js/LEGACY-vendors~drawer~push-state~search-hydejack-9.2.1.js",
+  /**/"/assets/js/LEGACY-vendors~fetch-hydejack-9.2.1.js",
+  /**/"/assets/js/LEGACY-vendors~intersection-observer-hydejack-9.2.1.js",
+  /**/"/assets/js/LEGACY-vendors~push-state-hydejack-9.2.1.js",
+  /**/"/assets/js/LEGACY-vendors~search-hydejack-9.2.1.js",
+  /**/"/assets/js/LEGACY-vendors~shadydom-hydejack-9.2.1.js",
+  /**/"/assets/js/LEGACY-vendors~webanimations-hydejack-9.2.1.js",
+  /**/"/assets/js/LEGACY-vendors~webcomponents-hydejack-9.2.1.js",
+  /**/"/assets/js/LEGACY-webcomponents-hydejack-9.2.1.js",
+  /**/"/assets/js/clap-button-hydejack-9.2.1.js",
+  /**/"/assets/js/drawer-hydejack-9.2.1.js",
+  /**/"/assets/js/fetch-hydejack-9.2.1.js",
+  /**/"/assets/js/hydejack-9.2.1.js",
+  /**/"/assets/js/navbar-hydejack-9.2.1.js",
+  /**/"/assets/js/push-state-hydejack-9.2.1.js",
+  /**/"/assets/js/resize-observer-hydejack-9.2.1.js",
+  /**/"/assets/js/search-hydejack-9.2.1.js",
+  /**/"/assets/js/shadydom-hydejack-9.2.1.js",
+  /**/"/assets/js/toc-hydejack-9.2.1.js",
+  /**/"/assets/js/vendors~clap-button-hydejack-9.2.1.js",
+  /**/"/assets/js/vendors~drawer-hydejack-9.2.1.js",
+  /**/"/assets/js/vendors~drawer~push-state-hydejack-9.2.1.js",
+  /**/"/assets/js/vendors~drawer~push-state~search-hydejack-9.2.1.js",
+  /**/"/assets/js/vendors~fetch-hydejack-9.2.1.js",
+  /**/"/assets/js/vendors~intersection-observer-hydejack-9.2.1.js",
+  /**/"/assets/js/vendors~push-state-hydejack-9.2.1.js",
+  /**/"/assets/js/vendors~search-hydejack-9.2.1.js",
+  /**/"/assets/js/vendors~shadydom-hydejack-9.2.1.js",
+  /**/"/assets/js/vendors~webanimations-hydejack-9.2.1.js",
+  /**/"/assets/js/webcomponents-hydejack-9.2.1.js",
   /**/"/assets/version.json",
   /**/
 ];
