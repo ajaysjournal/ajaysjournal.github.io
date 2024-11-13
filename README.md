@@ -1,1 +1,1 @@
-# notesbyair.github.io
+# ajaysjournal.github.io
